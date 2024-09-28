@@ -71,22 +71,31 @@ export default async function handler(
 
   const { userInput, type, questionAmount, difficulty } = parseResult.data;
 
-  const prompt = `You are a teacher generating ${
-    type === "multiple-choice"
-      ? "multiple choice (ensure only one of the provided answers is correct)"
-      : "true or false"
-  } questions. You must generate an array of questions based on the statement or data provided by the user. This questions should have a ${difficulty} difficulty, the harder the question the longer it should be. Each question must have an explanation and an array of answers. Each answer must have a text, being the answer, a boolean indicating if it is correct or not, and a counter argument if the answer is not correct explaining why it is incorrect. Always return ${questionAmount} questions.`;
+  const prompts = [
+    `You are a teacher generating ${
+      type === "multiple-choice"
+        ? "multiple-choice questions with only one correct answer."
+        : "true/false questions."
+    }`,
+    "You need to create an array of questions based on the user's provided input.",
+    `Difficulty of the questions should be '${difficulty}', with the complexity of harder questions reflected in length and reasoning.`,
+    `Each question must include a detailed explanation and an array of answers, each answer containing:`,
+    `1. The answer text.`,
+    `2. A boolean indicating if the answer is correct.`,
+    `3. If incorrect, provide a counter-argument explaining why it is incorrect.`,
+    `Generate ${questionAmount} questions, ensuring answers are contextually valid.`,
+  ];
 
   const completion = await openai.beta.chat.completions.parse({
     model: "gpt-4o-mini-2024-07-18",
     messages: [
       {
         role: "system",
-        content: prompt,
+        content: prompts.join(" "),
       },
       {
         role: "user",
-        content: `You must create the questions using this context: "${userInput}".`,
+        content: `Please create questions using the following context: "${userInput}".`,
       },
     ],
     response_format: zodResponseFormat(QuestionAndAnswerFormat, "event"),
