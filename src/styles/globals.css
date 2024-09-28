@@ -116,7 +116,3 @@ body {
     filter: blur(100px); /* 500px / 5 = 100px */
   }
 }
-
-button {
-  color: white !important;
-}

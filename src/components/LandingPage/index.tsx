@@ -85,7 +85,7 @@ export const LandingPage = () => {
               {errors.notes && <span className='text-red-500'>{errors.notes.message}</span>}
             </CardContent>
             <CardFooter>
-              <Button>Continue</Button>
+              <Button>Start Quiz</Button>
             </CardFooter>
           </Card>
         </form>
