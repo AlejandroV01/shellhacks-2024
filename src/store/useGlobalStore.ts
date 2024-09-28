@@ -1,38 +1,39 @@
-import { QuestionType } from "@/pages/api/get-questions";
-import { create } from "zustand";
-import { devtools, persist } from "zustand/middleware";
+import { QuestionType } from '@/pages/api/get-questions'
+import { create } from 'zustand'
+import { devtools, persist } from 'zustand/middleware'
 
 export interface IQuiz {
-  id: string;
-  noteId: string;
-  quizType: "true-or-false" | "multiple-choice"; // Add more types as needed
-  questions: QuestionType[];
-  score: number;
-  difficulty: "easy" | "medium" | "hard";
-  questionAmount: number;
+  id: string
+  noteId: string
+  quizType: 'true-or-false' | 'multiple-choice' // Add more types as needed
+  questions: QuestionType[]
+  score: number
+  difficulty: 'easy' | 'medium' | 'hard'
+  questionAmount: number
 }
 
 export interface INote {
-  title: string;
-  id: string;
-  content: string;
-  quizzes: IQuiz[];
+  title: string
+  description: string
+  id: string
+  content: string
+  quizzes: IQuiz[]
 }
 
 interface IGlobalStateValues {
-  notes: INote[];
+  notes: INote[]
 }
 
 export interface IGlobalState extends IGlobalStateValues {
-  addNote: ({ note }: { note: INote }) => void;
-  addQuiz: ({ quiz }: { quiz: IQuiz }) => void;
-  updateNote: (noteId: string, newNote: Partial<INote>) => void;
-  updateQuiz: (noteId: string, quizId: string, newQuiz: Partial<IQuiz>) => void;
+  addNote: ({ note }: { note: INote }) => void
+  addQuiz: ({ quiz }: { quiz: IQuiz }) => void
+  updateNote: (noteId: string, newNote: Partial<INote>) => void
+  updateQuiz: (noteId: string, quizId: string, newQuiz: Partial<IQuiz>) => void
 }
 
 export const initialState: IGlobalStateValues = {
   notes: [],
-};
+}
 
 const useGlobalStore = create<IGlobalState>()(
   devtools(
@@ -41,53 +42,45 @@ const useGlobalStore = create<IGlobalState>()(
         ...initialState,
 
         addNote: (newNote): void => {
-          set((state) => ({
+          set(state => ({
             notes: [...state.notes, newNote.note],
-          }));
+          }))
         },
         addQuiz: (newQuiz): void => {
-          const notes = get().notes;
+          const notes = get().notes
 
-          const note = notes.find((note) => note.id === newQuiz.quiz.noteId);
+          const note = notes.find(note => note.id === newQuiz.quiz.noteId)
 
           if (!note) {
-            return;
+            return
           }
-          set((state) => ({
-            notes: state.notes.map((note) =>
-              note.id === newQuiz.quiz.noteId
-                ? { ...note, quizzes: [...(note.quizzes || []), newQuiz.quiz] }
-                : note
-            ),
-          }));
+          set(state => ({
+            notes: state.notes.map(note => (note.id === newQuiz.quiz.noteId ? { ...note, quizzes: [...(note.quizzes || []), newQuiz.quiz] } : note)),
+          }))
         },
         updateNote: (noteId, newNote): void => {
-          set((state) => ({
-            notes: state.notes.map((note) =>
-              note.id === noteId ? { ...note, ...newNote } : note
-            ),
-          }));
+          set(state => ({
+            notes: state.notes.map(note => (note.id === noteId ? { ...note, ...newNote } : note)),
+          }))
         },
         updateQuiz: (noteId, quizId, newQuiz): void => {
-          set((state) => ({
-            notes: state.notes.map((note) =>
+          set(state => ({
+            notes: state.notes.map(note =>
               note.id === noteId
                 ? {
                     ...note,
-                    quizzes: note.quizzes.map((quiz) =>
-                      quiz.id === quizId ? { ...quiz, ...newQuiz } : quiz
-                    ),
+                    quizzes: note.quizzes.map(quiz => (quiz.id === quizId ? { ...quiz, ...newQuiz } : quiz)),
                   }
                 : note
             ),
-          }));
+          }))
         },
       }),
       {
-        name: "gpt-teacher-notes-store", // Store name
+        name: 'gpt-teacher-notes-store', // Store name
       }
     )
   )
-);
+)
 
-export default useGlobalStore;
+export default useGlobalStore
