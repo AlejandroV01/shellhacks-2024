@@ -2,6 +2,7 @@ import { AnimatedDivOnTrueValue } from "@/components/Animated/AnimatedDivOnTrueV
 import { MainLayout } from "@/components/Layouts/MainLayout";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import useGlobalStore from "@/store/useGlobalStore";
 import { Separator } from "@radix-ui/react-select";
@@ -121,6 +122,14 @@ const NotePage = () => {
                 >
                   <h2 className="text-2xl font-bold">Quiz {index + 1}</h2>
                   <p className="text-gray-400">HARDCODED - 2 hours ago</p>
+                  <Progress
+                    value={
+                      ((quiz.currentQuestionIndex + 1) /
+                        quiz.questions.length) *
+                      100
+                    }
+                    className="mt-3"
+                  />
                 </motion.div>
                 {selectedQuizId === quiz.id &&
                   continueToQuizButton({ quizId: quiz.id })}
