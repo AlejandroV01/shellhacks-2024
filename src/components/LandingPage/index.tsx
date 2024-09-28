@@ -5,6 +5,7 @@ import { ApiGetTitleType } from '@/pages/api/get-title'
 import useGlobalStore, { INote } from '@/store/useGlobalStore'
 import { motion } from 'framer-motion'
 import { BookOpen, PencilLine, Terminal } from 'lucide-react'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -13,7 +14,6 @@ import { Button } from '../ui/button'
 import { Card, CardContent, CardFooter } from '../ui/card'
 import { Textarea } from '../ui/textarea'
 import BackgroundAnimation from './BackgroundAnimated'
-
 type InputFields = {
   notes: string
 }
