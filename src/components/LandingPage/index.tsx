@@ -8,7 +8,7 @@ import { ModeToggle } from '../ModeToggle'
 import { Button } from '../ui/button'
 import { Card, CardContent, CardFooter } from '../ui/card'
 import { Textarea } from '../ui/textarea'
-
+import BackgroundAnimation from './BackgroundAnimated'
 type InputFields = {
   notes: string
 }
@@ -51,7 +51,10 @@ export const LandingPage = () => {
   }
 
   return (
-    <main className='p-4 flex flex-col items-center w-full'>
+    <main className='p-4 flex flex-col items-center w-full bg-transparent'>
+      <div className='fixed top-0 left-0 flex items-center justify-center w-full mt-20'>
+        <BackgroundAnimation />
+      </div>
       <nav className='flex justify-between w-full'>
         <div className='flex items-center gap-1'>
           <img src='/images/Logo.png' alt='' className='w-[60px]' />
@@ -68,7 +71,7 @@ export const LandingPage = () => {
         </h2>
         <span className='text-foreground/50'>One button away from creating a quiz based on your notes.</span>
         <form onSubmit={handleSubmit(onSubmit)} className='w-full'>
-          <Card className='w-full pt-6'>
+          <Card className='w-full pt-6 backdrop-blur-2xl bg-background/40'>
             <CardContent>
               <Textarea
                 {...register('notes', {
@@ -100,7 +103,7 @@ const NoteCard = ({ noteId, noteTitle, noteDescription }: { noteId: string; note
     router.push(`/${noteId}`)
   }
   return (
-    <Card className='w-full pt-6'>
+    <Card className='w-full pt-6 backdrop-blur-2xl bg-background/40'>
       <CardContent>
         <h3 className='text-xl font-bold'>{noteTitle}</h3>
         <p className='truncate'>{noteDescription}</p>
