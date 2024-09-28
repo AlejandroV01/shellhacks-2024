@@ -1,4 +1,5 @@
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { getQuizScore } from "@/lib/getQuizScore";
 import { cn } from "@/lib/utils";
 import { IQuiz } from "@/store/useGlobalStore";
 
@@ -39,7 +40,16 @@ export const QuizResults = ({ quiz }: Props) => {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold">Results</h1>
+      <h1 className="text-3xl font-bold">
+        Result: {getQuizScore({ quiz }).percent}%
+      </h1>
+      <div>
+        <p>
+          You got {getQuizScore({ quiz }).correctAnswers.length} out of{" "}
+          {quiz.questions.length} questions correct
+        </p>
+      </div>
+
       <div>{renderQuizResults()}</div>
     </div>
   );
