@@ -98,7 +98,9 @@ export const LandingPage = () => {
             </CardFooter>
           </Card>
         </form>
-        <h3 className="text-xl text-foreground/80 mr-auto">Previous Notes</h3>
+        <h3 className="text-xl font-bold text-foreground/80 mr-auto mt-5">
+          Previous Notes
+        </h3>
         {notes.length === 0 && (
           <Alert className="backdrop-blur-2xl bg-background/70">
             <Terminal className="h-4 w-4" />
