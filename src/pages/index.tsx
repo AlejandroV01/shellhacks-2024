@@ -14,7 +14,7 @@ const geistMono = localFont({
 
 export default function Main() {
   return (
-    <div className={`${geistSans.variable} ${geistMono.variable} bg-background`}>
+    <div className={`${geistSans.variable} ${geistMono.variable}`}>
       <LandingPage />
     </div>
   )

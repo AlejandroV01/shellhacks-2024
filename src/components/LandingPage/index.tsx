@@ -1,7 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { generateRandomId } from '@/lib/generateRandomId'
 import { ApiGetTitleType } from '@/pages/api/get-title'
 import useGlobalStore, { INote } from '@/store/useGlobalStore'
+import { Terminal } from 'lucide-react'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { ModeToggle } from '../ModeToggle'
@@ -83,11 +85,18 @@ export const LandingPage = () => {
               {errors.notes && <span className='text-red-500'>{errors.notes.message}</span>}
             </CardContent>
             <CardFooter>
-              <Button>Continue</Button>
+              <Button>Start Quiz</Button>
             </CardFooter>
           </Card>
         </form>
         <h3 className='text-xl text-foreground/80 mr-auto'>Previous Notes</h3>
+        {notes.length === 0 && (
+          <Alert className='backdrop-blur-2xl bg-background/40'>
+            <Terminal className='h-4 w-4' />
+            <AlertTitle className='font-semibold text-lg'>Heads up!</AlertTitle>
+            <AlertDescription>Add your first note using the box above!</AlertDescription>
+          </Alert>
+        )}
         {notes.length > 0 &&
           notes.map(note => {
             return <NoteCard key={note.id} noteId={note.id} noteTitle={note.title} noteDescription={note.description} />
