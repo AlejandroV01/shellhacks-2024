@@ -10,7 +10,6 @@ export const getQuizScore = ({ quiz }: { quiz: IQuiz }) => {
   });
 
   const score = correctAnswers.length / quiz.questions.length;
-
   const percent = Math.round(score * 100);
 
   return {

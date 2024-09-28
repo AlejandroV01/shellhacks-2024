@@ -71,18 +71,25 @@ export default async function handler(
 
   const { userInput, type, questionAmount, difficulty } = parseResult.data;
 
-  const prompt = `You are a teacher generating ${
-    type === "multiple-choice"
-      ? "multiple choice (ensure only one of the provided answers is correct)"
-      : "true or false"
-  } questions. You must generate an array of questions based on the statement or data provided by the user. This questions should have a ${difficulty} difficulty, the harder the question the longer it should be. Each question must have an explanation and an array of answers. Each answer must have a text, being the answer, a boolean indicating if it is correct or not, and a counter argument if the answer is not correct explaining why it is incorrect. Always return ${questionAmount} questions.`;
+  const prompts = [
+    `You are a teacher generating ${
+      type === "multiple-choice"
+        ? "multiple choice (ensure only one of the provided answers is correct)"
+        : "true or false"
+    } questions.`,
+    "You must generate an array of questions based on the statement or data provided by the user",
+    `The questions should be ${difficulty}, the harder the question the longer it should be.`,
+    `Each question must have an explanation and an array of answers.`,
+    "Each answer must have a text, being the answer, a boolean indicating if it is correct or not, and a counter argument if the answer is not correct explaining why it is incorrect.",
+    `You MUST return ${questionAmount} questions.`,
+  ];
 
   const completion = await openai.beta.chat.completions.parse({
     model: "gpt-4o-mini-2024-07-18",
     messages: [
       {
         role: "system",
-        content: prompt,
+        content: prompts.join(" "),
       },
       {
         role: "user",

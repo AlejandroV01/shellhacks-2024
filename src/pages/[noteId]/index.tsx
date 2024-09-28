@@ -3,6 +3,7 @@ import { MainLayout } from "@/components/Layouts/MainLayout";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { getQuizScore } from "@/lib/getQuizScore";
 import { cn } from "@/lib/utils";
 import useGlobalStore from "@/store/useGlobalStore";
 import { Separator } from "@radix-ui/react-select";
@@ -30,7 +31,23 @@ const NotePage = () => {
     router.push(`/${noteId}/choose-study-mode/${quizId}`);
   };
 
-  const continueToQuizButton = ({ quizId }: { quizId: string }) => {
+  const continueToQuizButton = ({
+    quizId,
+    currentQuestionIndex,
+    questionsLength,
+  }: {
+    quizId: string;
+    currentQuestionIndex: number;
+    questionsLength: number;
+  }) => {
+    const getButtonTitle = () => {
+      if (quizId === "new") return "Start Quiz";
+      if (questionsLength > 1 && currentQuestionIndex === questionsLength - 1)
+        return "Review Quiz";
+
+      return "Continue Quiz";
+    };
+
     return (
       <AnimatedDivOnTrueValue condition={true}>
         <Separator className="my-5" />
@@ -40,7 +57,7 @@ const NotePage = () => {
           </Link>
           <div className="flex space-x-3">
             <Button onClick={() => handleCreateNewQuiz({ quizId })}>
-              Continue
+              {getButtonTitle()}
             </Button>
           </div>
         </div>
@@ -93,7 +110,11 @@ const NotePage = () => {
           </motion.div>
           <div className="mb-10">
             {selectedQuizId === "new" &&
-              continueToQuizButton({ quizId: "new" })}
+              continueToQuizButton({
+                quizId: "new",
+                currentQuestionIndex: 0,
+                questionsLength: 0,
+              })}
           </div>
         </div>
 
@@ -105,6 +126,11 @@ const NotePage = () => {
               const questionsPercentageOfCompletion = Math.round(
                 ((quiz.currentQuestionIndex + 1) / quiz.questions.length) * 100
               );
+
+              const isQuizCompleted =
+                quiz.currentQuestionIndex + 1 === quiz.questions.length;
+
+              const quizResults = getQuizScore({ quiz });
 
               return (
                 <div key={quiz.id}>
@@ -125,20 +151,40 @@ const NotePage = () => {
                         "border-blue-500 hover:border-blue-500"
                     )}
                   >
-                    <h2 className="text-2xl font-bold">Quiz {index + 1}</h2>
-                    <p className="text-gray-400">HARDCODED - 2 hours ago</p>
-                    <Progress
-                      color={
-                        questionsPercentageOfCompletion < 100
-                          ? "bg-yellow-500"
-                          : "bg-green-500"
-                      }
-                      value={questionsPercentageOfCompletion}
-                      className="mt-3 text-red-500  "
-                    />
+                    <div className="flex items-baseline space-x-3 ">
+                      <h2 className="text-2xl font-bold">Quiz {index + 1}</h2>
+                      <p>{isQuizCompleted ? "Completed" : "In Progress"}</p>
+                    </div>
+                    {isQuizCompleted && (
+                      <div className="my-3">
+                        <p>Score: {quizResults.percent}%</p>
+                        <p>
+                          You got {quizResults.correctAnswers.length} out of{" "}
+                          {quiz.questions.length} questions correct
+                        </p>
+                      </div>
+                    )}
+
+                    {!isQuizCompleted && (
+                      <Progress
+                        color={
+                          questionsPercentageOfCompletion < 100
+                            ? "bg-yellow-500"
+                            : "bg-green-500"
+                        }
+                        value={questionsPercentageOfCompletion}
+                        className="my-3 text-red-500  "
+                      />
+                    )}
+
+                    <p className="text-gray-400">Created - 2 hours ago</p>
                   </motion.div>
                   {selectedQuizId === quiz.id &&
-                    continueToQuizButton({ quizId: quiz.id })}
+                    continueToQuizButton({
+                      quizId: quiz.id,
+                      currentQuestionIndex: quiz.currentQuestionIndex,
+                      questionsLength: quiz.questions.length,
+                    })}
                 </div>
               );
             })}
