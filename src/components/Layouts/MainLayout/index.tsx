@@ -1,61 +1,48 @@
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { useRouter } from "next/router";
-import Link from "next/link";
-
+/* eslint-disable @next/next/no-img-element */
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 type Props = {
-  children: React.ReactNode;
-};
+  children: React.ReactNode
+}
 export const MainLayout = ({ children }: Props) => {
-  const router = useRouter();
-  const { pathname, query } = router;
+  const router = useRouter()
+  const { pathname, query } = router
 
-  const pathSegments = pathname.split("/").filter(Boolean);
+  const pathSegments = pathname.split('/').filter(Boolean)
 
   const breadcrumbs = pathSegments.map((segment, index) => {
     const href =
-      "/" +
+      '/' +
       pathSegments
         .slice(0, index + 1)
-        .map((seg) => {
-          const isDynamic = seg.startsWith("[") && seg.endsWith("]");
-          const dynamicPartKey = seg.slice(1, -1);
-          return isDynamic && query[dynamicPartKey]
-            ? query[dynamicPartKey]
-            : seg;
+        .map(seg => {
+          const isDynamic = seg.startsWith('[') && seg.endsWith(']')
+          const dynamicPartKey = seg.slice(1, -1)
+          return isDynamic && query[dynamicPartKey] ? query[dynamicPartKey] : seg
         })
-        .join("/");
+        .join('/')
 
     const getCorrectSegment = () => {
-      if (segment === "[noteId]") {
-        return "Note";
+      if (segment === '[noteId]') {
+        return 'Note'
       }
 
-      if (segment === "[quizId]") {
-        return "Quiz";
+      if (segment === '[quizId]') {
+        return 'Quiz'
       }
 
-      const formattedSegment = segment.replace(/-/g, " ");
+      const formattedSegment = segment.replace(/-/g, ' ')
 
-      return (
-        formattedSegment.charAt(0).toUpperCase() + formattedSegment.slice(1)
-      );
-    };
+      return formattedSegment.charAt(0).toUpperCase() + formattedSegment.slice(1)
+    }
 
-    const isLast = index === pathSegments.length - 1;
+    const isLast = index === pathSegments.length - 1
 
     return (
       <BreadcrumbItem key={href}>
         {isLast ? (
-          <BreadcrumbPage className="text-foreground">
-            {getCorrectSegment()}
-          </BreadcrumbPage>
+          <BreadcrumbPage className='text-foreground'>{getCorrectSegment()}</BreadcrumbPage>
         ) : (
           <>
             <Link href={href}>
@@ -65,17 +52,20 @@ export const MainLayout = ({ children }: Props) => {
           </>
         )}
       </BreadcrumbItem>
-    );
-  });
+    )
+  })
 
   return (
-    <div className="max-w-4xl m-auto p-10">
-      <div className="my-10">
-        <h1 className="text-2xl font-bold">GPT Teacher</h1>
+    <div className='max-w-4xl m-auto p-10'>
+      <div className='my-10'>
+        <Link className='flex items-center gap-2' href={'/'}>
+          <img src='/images/Logo.png' alt='' className='w-[50px]' />
+          <h1 className='text-2xl font-bold'>GPT Teacher</h1>
+        </Link>
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <Link href="/">
+              <Link href='/'>
                 <BreadcrumbLink>Home</BreadcrumbLink>
               </Link>
             </BreadcrumbItem>
@@ -84,7 +74,7 @@ export const MainLayout = ({ children }: Props) => {
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-      <div className="my-10">{children}</div>
+      <div className='my-10'>{children}</div>
     </div>
-  );
-};
+  )
+}
