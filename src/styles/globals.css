@@ -26,6 +26,11 @@ body {
   }
 }
 
+.mermaid {
+  visibility: visible !important;
+  color: #fff !important; /* Ensure text color is visible in dark theme */
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
