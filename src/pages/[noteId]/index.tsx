@@ -101,40 +101,47 @@ const NotePage = () => {
         <AnimatePresence mode="wait">
           <h1 className="mt-5 text-xl font-bold">Previous completed quizzes</h1>
           <div>
-            {note.quizzes.map((quiz, index) => (
-              <div key={quiz.id}>
-                <motion.div
-                  onClick={() => {
-                    setSelectedQuizId(quiz.id);
-                  }}
-                  whileHover={{
-                    y: -5,
-                  }}
-                  animate={{
-                    scale: selectedQuizId === quiz.id ? 1.05 : 1,
-                  }}
-                  transition={{ duration: 0.5, type: "spring" }}
-                  className={cn(
-                    "my-5 border p-5 rounded-xl border-gray-500 hover:-translate-y-1 cursor-pointer",
-                    selectedQuizId === quiz.id &&
-                      "border-blue-500 hover:border-blue-500"
-                  )}
-                >
-                  <h2 className="text-2xl font-bold">Quiz {index + 1}</h2>
-                  <p className="text-gray-400">HARDCODED - 2 hours ago</p>
-                  <Progress
-                    value={
-                      ((quiz.currentQuestionIndex + 1) /
-                        quiz.questions.length) *
-                      100
-                    }
-                    className="mt-3"
-                  />
-                </motion.div>
-                {selectedQuizId === quiz.id &&
-                  continueToQuizButton({ quizId: quiz.id })}
-              </div>
-            ))}
+            {note.quizzes.map((quiz, index) => {
+              const questionsPercentageOfCompletion = Math.round(
+                ((quiz.currentQuestionIndex + 1) / quiz.questions.length) * 100
+              );
+
+              return (
+                <div key={quiz.id}>
+                  <motion.div
+                    onClick={() => {
+                      setSelectedQuizId(quiz.id);
+                    }}
+                    whileHover={{
+                      y: -5,
+                    }}
+                    animate={{
+                      scale: selectedQuizId === quiz.id ? 1.05 : 1,
+                    }}
+                    transition={{ duration: 0.5, type: "spring" }}
+                    className={cn(
+                      "my-5 border p-5 rounded-xl border-gray-500 hover:-translate-y-1 cursor-pointer",
+                      selectedQuizId === quiz.id &&
+                        "border-blue-500 hover:border-blue-500"
+                    )}
+                  >
+                    <h2 className="text-2xl font-bold">Quiz {index + 1}</h2>
+                    <p className="text-gray-400">HARDCODED - 2 hours ago</p>
+                    <Progress
+                      color={
+                        questionsPercentageOfCompletion < 100
+                          ? "bg-yellow-500"
+                          : "bg-green-500"
+                      }
+                      value={questionsPercentageOfCompletion}
+                      className="mt-3 text-red-500  "
+                    />
+                  </motion.div>
+                  {selectedQuizId === quiz.id &&
+                    continueToQuizButton({ quizId: quiz.id })}
+                </div>
+              );
+            })}
           </div>
         </AnimatePresence>
       </>
