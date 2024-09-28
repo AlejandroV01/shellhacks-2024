@@ -18,7 +18,6 @@ const RequestBodySchema = z.object({
 });
 
 export const QuestionAndAnswerFormat = z.object({
-  title: z.string(),
   questions: z.array(
     z.object({
       question: z.string(),
@@ -40,7 +39,7 @@ export type QuestionType = z.infer<
 
 export type ApiGetQuestionsType = {
   message: string;
-  data: { questions: QuestionType[]; title: string } | null;
+  data: { questions: QuestionType[] } | null;
   errors?: z.ZodFormattedError<
     {
       userInput: string;
