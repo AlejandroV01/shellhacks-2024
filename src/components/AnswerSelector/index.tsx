@@ -3,12 +3,11 @@ import { QuestionType } from "@/pages/api/get-questions";
 import useGlobalStore, { IQuiz } from "@/store/useGlobalStore";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Lightbulb } from "lucide-react";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { AnimatedDivOnTrueValue } from "../Animated/AnimatedDivOnTrueValue";
 import MarkdownRenderer from "../MarkdownRenderer";
 import { Button } from "../ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Skeleton } from "../ui/skeleton";
 import {
   Tooltip,
@@ -17,13 +16,13 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip";
 import { AnswerButton } from "./_helpers/AnswerButton";
+import { QuizResults } from "./_helpers/QuizResults";
 
 type Props = {
   quiz: IQuiz;
-  handleGetQuestions: () => Promise<IQuiz | null>;
 };
 
-export const AnswerSelector = ({ quiz, handleGetQuestions }: Props) => {
+export const AnswerSelector = ({ quiz }: Props) => {
   const { updateQuiz } = useGlobalStore();
 
   const {
@@ -34,6 +33,19 @@ export const AnswerSelector = ({ quiz, handleGetQuestions }: Props) => {
   } = useGetQuestionDeepDive();
 
   const scrollToDeepDiveRef = useRef<HTMLDivElement | null>(null);
+
+  const [isShowingResults, setIsShowingResults] = useState(false);
+
+  useEffect(() => {
+    const isLastQuestion =
+      quiz.currentQuestionIndex === quiz.questions.length - 1;
+
+    if (isLastQuestion) {
+      setIsShowingResults(true);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleNextQuestion = () => {
     if (quiz.currentQuestionIndex === quiz.questions.length - 1) {
@@ -48,18 +60,30 @@ export const AnswerSelector = ({ quiz, handleGetQuestions }: Props) => {
     handleClearDeepDive();
   };
 
-  const handleStartOver = ({ reset }: { reset: boolean }) => {
+  const handleGoToResults = () => {
+    setIsShowingResults(true);
+  };
+
+  const handleStartOver = () => {
+    const newQuizQuestions = quiz.questions.map((question) => ({
+      ...question,
+      userSelection: undefined,
+    }));
+
     updateQuiz(quiz.noteId, quiz.id, {
       currentQuestionIndex: 0,
+      questions: newQuizQuestions,
     });
 
     handleClearDeepDive();
+  };
 
-    if (reset) {
-      (async () => {
-        await handleGetQuestions();
-      })();
+  const getAnimationIndex = () => {
+    if (isShowingResults) {
+      return 9999;
     }
+
+    return quiz.currentQuestionIndex;
   };
 
   const executeScroll = () => {
@@ -90,10 +114,42 @@ export const AnswerSelector = ({ quiz, handleGetQuestions }: Props) => {
     });
   };
 
+  const handleRenderNextButton = () => {
+    const isLastQuestion =
+      quiz.currentQuestionIndex === quiz.questions.length - 1;
+
+    if (isLastQuestion) {
+      return (
+        <Button onClick={handleGoToResults}>
+          <div className="flex align-middle justify-center items-center">
+            <p>Results</p>
+            <ArrowRight className="h-4" />
+          </div>
+        </Button>
+      );
+    }
+
+    return (
+      <Button disabled={isLastQuestion} onClick={handleNextQuestion}>
+        <div className="flex align-middle justify-center items-center">
+          <p>
+            Next Question{" "}
+            {`${quiz.currentQuestionIndex + 1}/${quiz.questions.length}`}
+          </p>
+          <ArrowRight className="h-4" />
+        </div>
+      </Button>
+    );
+  };
+
   const renderSelectedQuestion = () => {
     const currentQuestion = quiz.questions[quiz.currentQuestionIndex];
     const isLastQuestion =
       quiz.currentQuestionIndex === quiz.questions.length - 1;
+
+    if (isShowingResults) {
+      return <QuizResults />;
+    }
 
     if (currentQuestion) {
       return (
@@ -122,28 +178,13 @@ export const AnswerSelector = ({ quiz, handleGetQuestions }: Props) => {
           >
             <div>
               {isLastQuestion && (
-                <Popover>
-                  <PopoverTrigger>
-                    <Button variant="outline">Start over</Button>
-                  </PopoverTrigger>
-                  <PopoverContent>
-                    <div className="flex flex-col space-y-3">
-                      <Button
-                        onClick={() => handleStartOver({ reset: false })}
-                        variant="ghost"
-                        className="w-full"
-                      >
-                        Retry same questions
-                      </Button>
-                      <Button
-                        onClick={() => handleStartOver({ reset: true })}
-                        className="w-full"
-                      >
-                        Regenerate Questions
-                      </Button>
-                    </div>
-                  </PopoverContent>
-                </Popover>
+                <Button
+                  onClick={() => handleStartOver()}
+                  variant="outline"
+                  className="w-full"
+                >
+                  Retry Quiz
+                </Button>
               )}
             </div>
 
@@ -186,17 +227,8 @@ export const AnswerSelector = ({ quiz, handleGetQuestions }: Props) => {
                   </TooltipProvider>
                 </motion.div>
               )}
-              <Button disabled={isLastQuestion} onClick={handleNextQuestion}>
-                <div className="flex align-middle justify-center items-center">
-                  <p>
-                    Next Question{" "}
-                    {`${quiz.currentQuestionIndex + 1}/${
-                      quiz.questions.length
-                    }`}
-                  </p>
-                  <ArrowRight className="h-4" />
-                </div>
-              </Button>
+
+              {handleRenderNextButton()}
             </div>
           </AnimatedDivOnTrueValue>
         </div>
@@ -208,7 +240,7 @@ export const AnswerSelector = ({ quiz, handleGetQuestions }: Props) => {
     <div>
       <AnimatePresence mode="wait">
         <motion.div
-          key={quiz.currentQuestionIndex}
+          key={getAnimationIndex()}
           initial={{ x: 30, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: -30, opacity: 0 }}
