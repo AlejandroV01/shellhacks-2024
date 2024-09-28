@@ -4,7 +4,7 @@ import { generateRandomId } from "@/lib/generateRandomId";
 import { ApiGetTitleType } from "@/pages/api/get-title";
 import useGlobalStore, { INote } from "@/store/useGlobalStore";
 import { motion } from "framer-motion";
-import { Terminal } from "lucide-react";
+import { BookOpen, PencilLine, Terminal } from "lucide-react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -86,15 +86,18 @@ export const LandingPage = () => {
                 {...register("notes", {
                   required: "This field is required",
                 })}
-                placeholder="Paste your notes here"
+                placeholder="Type a topic, or paste your notes here..."
                 rows={8}
               />
               {errors.notes && (
                 <span className="text-red-500">{errors.notes.message}</span>
               )}
             </CardContent>
-            <CardFooter>
-              <Button>Start Quiz</Button>
+            <CardFooter className="flex justify-end">
+              <Button className="space-x-2 flex">
+                <p>Start Quiz</p>
+                <PencilLine className="h-4 w-4" />
+              </Button>
             </CardFooter>
           </Card>
         </form>
@@ -139,8 +142,12 @@ export const LandingPage = () => {
                   condition={note.id === selectedTempNoteId}
                 >
                   <div className="flex justify-end my-5">
-                    <Button onClick={() => handleEnterNote(note.id)}>
-                      Enter Note
+                    <Button
+                      className="flex space-x-2"
+                      onClick={() => handleEnterNote(note.id)}
+                    >
+                      <p>Open Note</p>
+                      <BookOpen className="h-4 w-4" />
                     </Button>
                   </div>
                 </AnimatedDivOnTrueValue>
