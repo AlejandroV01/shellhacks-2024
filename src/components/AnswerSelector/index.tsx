@@ -116,7 +116,7 @@ export const AnswerSelector = ({ quiz, handleGetQuestions }: Props) => {
             );
           })}
           <AnimatedDivOnTrueValue
-            condition={currentQuestion !== null}
+            condition={currentQuestion.userSelection !== undefined}
             delay={0.5}
             className="flex py-3 justify-between"
           >
