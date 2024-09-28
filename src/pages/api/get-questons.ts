@@ -38,7 +38,7 @@ export type QuestionType = z.infer<
   typeof QuestionAndAnswerFormat
 >["questions"][number];
 
-export type ApiTrueOrFalseGetQuestionsResponseType = {
+export type ApiGetQuestionsType = {
   message: string;
   data: { questions: QuestionType[]; title: string } | null;
   errors?: z.ZodFormattedError<
@@ -51,7 +51,7 @@ export type ApiTrueOrFalseGetQuestionsResponseType = {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ApiTrueOrFalseGetQuestionsResponseType>
+  res: NextApiResponse<ApiGetQuestionsType>
 ) {
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Method Not Allowed", data: null });

@@ -1,8 +1,5 @@
-import {
-  ApiTrueOrFalseGetQuestionsResponseType,
-  QuestionType,
-} from "@/pages/api/get-questions";
-import useGlobalStore from "@/store/useGlobalStore";
+import { ApiGetQuestionsType } from "@/pages/api/get-questons";
+import useGlobalStore, { IQuiz } from "@/store/useGlobalStore";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -14,10 +11,10 @@ export const useGetQuestions = () => {
   const quizId = router.query.quizId as string;
 
   const [isLoading, setIsLoading] = useState(false);
-  const [questions, setQuestions] = useState<QuestionType[] | null>(null);
+  const [quiz, setQuiz] = useState<IQuiz | null>(null);
   const [error, setError] = useState(false);
 
-  const handleGetQuestions = async () => {
+  const handleGetQuestions = async (): Promise<IQuiz | null> => {
     console.log("noteId", noteId);
 
     const currentNote = notes.find((note) => note.id === noteId);
@@ -25,7 +22,7 @@ export const useGetQuestions = () => {
 
     if (currentQuiz?.questions && currentQuiz.questions.length > 0) {
       setIsLoading(false);
-      return currentQuiz.questions;
+      return currentQuiz;
     }
 
     try {
@@ -49,8 +46,7 @@ export const useGetQuestions = () => {
         }),
       });
 
-      const data =
-        (await response.json()) as ApiTrueOrFalseGetQuestionsResponseType;
+      const data = (await response.json()) as ApiGetQuestionsType;
 
       if (!data || !data.data) {
         setError(true);
@@ -68,7 +64,7 @@ export const useGetQuestions = () => {
       });
 
       setIsLoading(false);
-      return questions;
+      return { ...currentQuiz, questions };
     } catch {
       setError(true);
       setIsLoading(false);
@@ -83,10 +79,10 @@ export const useGetQuestions = () => {
       const questionsResponse = await handleGetQuestions();
 
       setIsLoading(false);
-      setQuestions(questionsResponse);
+      setQuiz(questionsResponse);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [noteId, quizId]);
 
-  return { isLoading, questions, handleGetQuestions, error };
+  return { isLoading, quiz, handleGetQuestions, error };
 };
