@@ -7,7 +7,7 @@ import { CircleX } from "lucide-react";
 
 const TestPage = () => {
   const { notes } = useGlobalStore();
-  const { isLoading, quiz, error, handleGetQuestions } = useGetQuestions();
+  const { isLoading, quiz, error } = useGetQuestions();
 
   const localStorageUpdatedQuiz = notes.find
     ? notes
@@ -50,10 +50,7 @@ const TestPage = () => {
 
     return (
       <div className="px-10">
-        <AnswerSelector
-          handleGetQuestions={handleGetQuestions}
-          quiz={localStorageUpdatedQuiz}
-        />
+        <AnswerSelector quiz={localStorageUpdatedQuiz} />
       </div>
     );
   };

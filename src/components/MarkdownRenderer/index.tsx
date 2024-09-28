@@ -18,7 +18,14 @@ const MarkdownRenderer = ({ markdown }: Props) => {
   }, [markdown]);
 
   useEffect(() => {
-    mermaid.initialize({ startOnLoad: true, darkMode: true, theme: "dark" });
+    mermaid.initialize({
+      startOnLoad: true,
+      darkMode: true,
+      theme: "dark",
+      flowchart: {
+        htmlLabels: false,
+      },
+    });
     mermaid.contentLoaded();
   }, [markdown, style]);
 
