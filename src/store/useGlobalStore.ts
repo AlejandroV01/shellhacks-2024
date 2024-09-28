@@ -1,4 +1,4 @@
-import { QuestionType } from "@/pages/api/get-questons";
+import { QuestionType } from "@/pages/api/get-questions";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 

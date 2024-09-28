@@ -1,4 +1,4 @@
-import { ApiGetQuestionsType } from "@/pages/api/get-questons";
+import { ApiGetQuestionsType } from "@/pages/api/get-questions";
 import useGlobalStore, { IQuiz } from "@/store/useGlobalStore";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";

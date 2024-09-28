@@ -1,11 +1,9 @@
-import { QuestionType } from "@/pages/api/get-questions";
 import { useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import { AnswerButton } from "./_helpers/AnswerButton";
 import { AnimatedDivOnTrueValue } from "../Animated/AnimatedDivOnTrueValue";
-import { useGetQuestionDeepDive } from "@/hooks/useGetQuestionDeepDive";
 import MarkdownRenderer from "../MarkdownRenderer";
 import {
   Tooltip,
@@ -16,6 +14,8 @@ import {
 import { ArrowRight, Lightbulb } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { QuestionType } from "@/pages/api/get-questions";
+import { useGetQuestionDeepDive } from "@/hooks/useGetQuestionDeepDive";
 
 type Props = {
   questions: QuestionType[];
