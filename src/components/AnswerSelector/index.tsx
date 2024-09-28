@@ -1,28 +1,31 @@
-import { QuestionType } from "@/pages/api/get-questions";
-import { useRef, useState } from "react";
-import { Button } from "../ui/button";
-import { toast } from "sonner";
-import { motion, AnimatePresence } from "framer-motion";
-import { AnswerButton } from "./_helpers/AnswerButton";
-import { AnimatedDivOnTrueValue } from "../Animated/AnimatedDivOnTrueValue";
 import { useGetQuestionDeepDive } from "@/hooks/useGetQuestionDeepDive";
+import { QuestionType } from "@/pages/api/get-questions";
+import useGlobalStore, { IQuiz } from "@/store/useGlobalStore";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowRight, Lightbulb } from "lucide-react";
+import { useRef } from "react";
+import { toast } from "sonner";
+import { AnimatedDivOnTrueValue } from "../Animated/AnimatedDivOnTrueValue";
 import MarkdownRenderer from "../MarkdownRenderer";
+import { Button } from "../ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Skeleton } from "../ui/skeleton";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
-import { ArrowRight, Lightbulb } from "lucide-react";
-import { Skeleton } from "../ui/skeleton";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { AnswerButton } from "./_helpers/AnswerButton";
 
 type Props = {
-  questions: QuestionType[];
-  handleGetQuestions: () => Promise<QuestionType[] | null>;
+  quiz: IQuiz;
+  handleGetQuestions: () => Promise<IQuiz | null>;
 };
 
-export const AnswerSelector = ({ questions, handleGetQuestions }: Props) => {
+export const AnswerSelector = ({ quiz, handleGetQuestions }: Props) => {
+  const { updateQuiz } = useGlobalStore();
+
   const {
     isLoading,
     handleGetQuestionDeepDive,
@@ -32,25 +35,24 @@ export const AnswerSelector = ({ questions, handleGetQuestions }: Props) => {
 
   const scrollToDeepDiveRef = useRef<HTMLDivElement | null>(null);
 
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [wasAnswerSelected, setWasAnswerSelected] = useState<string | null>(
-    null
-  );
-
   const handleNextQuestion = () => {
-    if (currentQuestionIndex === questions.length - 1) {
+    if (quiz.currentQuestionIndex === quiz.questions.length - 1) {
       toast("no more questions");
       return;
     }
 
-    setCurrentQuestionIndex((prev) => prev + 1);
-    setWasAnswerSelected(null);
+    updateQuiz(quiz.noteId, quiz.id, {
+      currentQuestionIndex: quiz.currentQuestionIndex + 1,
+    });
+
     handleClearDeepDive();
   };
 
   const handleStartOver = ({ reset }: { reset: boolean }) => {
-    setCurrentQuestionIndex(0);
-    setWasAnswerSelected(null);
+    updateQuiz(quiz.noteId, quiz.id, {
+      currentQuestionIndex: 0,
+    });
+
     handleClearDeepDive();
 
     if (reset) {
@@ -69,15 +71,29 @@ export const AnswerSelector = ({ questions, handleGetQuestions }: Props) => {
     }
   };
 
-  const handleSelectQuestion = (question: QuestionType["answers"][number]) => {
-    if (wasAnswerSelected) return;
+  const handleSelectQuestion = (answer: QuestionType["answers"][number]) => {
+    if (quiz.questions[quiz.currentQuestionIndex].userSelection) return;
 
-    setWasAnswerSelected(question.text);
+    const userSelection = answer.text;
+
+    updateQuiz(quiz.noteId, quiz.id, {
+      questions: quiz.questions.map((question, index) => {
+        if (index === quiz.currentQuestionIndex) {
+          return {
+            ...question,
+            userSelection,
+          };
+        }
+
+        return question;
+      }),
+    });
   };
 
   const renderSelectedQuestion = () => {
-    const currentQuestion = questions[currentQuestionIndex];
-    const isLastQuestion = currentQuestionIndex === questions.length - 1;
+    const currentQuestion = quiz.questions[quiz.currentQuestionIndex];
+    const isLastQuestion =
+      quiz.currentQuestionIndex === quiz.questions.length - 1;
 
     if (currentQuestion) {
       return (
@@ -86,7 +102,7 @@ export const AnswerSelector = ({ questions, handleGetQuestions }: Props) => {
             <h1 className="text-3xl">{currentQuestion.question}</h1>
           </div>
           {currentQuestion.answers.map((answer, index) => {
-            const isSelected = wasAnswerSelected === answer.text;
+            const isSelected = currentQuestion.userSelection === answer.text;
 
             return (
               <AnswerButton
@@ -100,7 +116,7 @@ export const AnswerSelector = ({ questions, handleGetQuestions }: Props) => {
             );
           })}
           <AnimatedDivOnTrueValue
-            condition={wasAnswerSelected !== null}
+            condition={currentQuestion.userSelection !== undefined}
             delay={0.5}
             className="flex py-3 justify-between"
           >
@@ -174,7 +190,9 @@ export const AnswerSelector = ({ questions, handleGetQuestions }: Props) => {
                 <div className="flex align-middle justify-center items-center">
                   <p>
                     Next Question{" "}
-                    {`${currentQuestionIndex + 1}/${questions.length}`}
+                    {`${quiz.currentQuestionIndex + 1}/${
+                      quiz.questions.length
+                    }`}
                   </p>
                   <ArrowRight className="h-4" />
                 </div>
@@ -190,7 +208,7 @@ export const AnswerSelector = ({ questions, handleGetQuestions }: Props) => {
     <div>
       <AnimatePresence mode="wait">
         <motion.div
-          key={currentQuestionIndex}
+          key={quiz.currentQuestionIndex}
           initial={{ x: 30, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: -30, opacity: 0 }}

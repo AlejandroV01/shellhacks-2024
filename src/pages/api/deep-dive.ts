@@ -11,19 +11,18 @@ const openai = new OpenAI({
 });
 
 const RequestBodySchema = z.object({
-  userInput: z.string().min(1, { message: "User input is required." }),
+  question: z.string().min(1, { message: "User input is required." }),
 });
 
-export const QuestionAndAnswerFormat = z.object({
-  title: z.string(),
-  description: z.string(),
+export const DeepDiveFormat = z.object({
+  markdown: z.string(),
 });
 
-export type QuestionType = z.infer<typeof QuestionAndAnswerFormat>;
+export type DeepDiveType = z.infer<typeof DeepDiveFormat>;
 
-export type ApiGetTitleType = {
+export type ApiDeepDiveResponse = {
   message: string;
-  data: { data: QuestionType } | null;
+  data: DeepDiveType | null;
   errors?: z.ZodFormattedError<
     {
       userInput: string;
@@ -34,7 +33,7 @@ export type ApiGetTitleType = {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ApiGetTitleType>
+  res: NextApiResponse<ApiDeepDiveResponse>
 ) {
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Method Not Allowed", data: null });
@@ -52,9 +51,10 @@ export default async function handler(
     });
   }
 
-  const { userInput } = parseResult.data;
+  const { question } = parseResult.data;
 
-  const prompt = `Create a title for the following context that the user will give. Write the title in less than 5 words. Write a short description using less than 20 words`;
+  const prompt = `You are a teacher and you must create a deep dive explanation for your student on a topic. You must return the output in markdown format. You should use blocks of code, diagrams (using mermaid.js syntax, do NOT use overly complex diagrams that could contain wrong syntax). You must go straight to the point, do NOT use filler text or unnecessary information.`;
+
   const completion = await openai.beta.chat.completions.parse({
     model: "gpt-4o-mini-2024-07-18",
     messages: [
@@ -64,22 +64,13 @@ export default async function handler(
       },
       {
         role: "user",
-        content: `You must create the title and description using this context: "${userInput}".`,
+        content: `The context is: "${question}".`,
       },
     ],
-    response_format: zodResponseFormat(QuestionAndAnswerFormat, "event"),
+    response_format: zodResponseFormat(DeepDiveFormat, "event"),
   });
 
   const event = completion.choices[0].message.parsed;
-  if (event === null) {
-    res.status(400).json({ message: "Event is null", data: null });
-    return;
-  }
-  const response = {
-    data: {
-      title: event.title,
-      description: event.description,
-    },
-  };
-  res.status(200).json({ message: "All good", data: response });
+
+  res.status(200).json({ message: "All good", data: event });
 }

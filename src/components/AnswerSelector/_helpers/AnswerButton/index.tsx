@@ -66,7 +66,7 @@ export const AnswerButton = ({
             transition={{ duration: 0.3 }}
           >
             <p> {currentQuestion.explanation}</p>
-            <Alert className="bg-black mt-5">
+            <Alert className="bg-background text-foreground mt-5">
               <AlertTitle>Counter argument</AlertTitle>
               <AlertDescription>{answer.counterArgument}</AlertDescription>
             </Alert>
