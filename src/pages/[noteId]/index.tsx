@@ -1,5 +1,6 @@
 import { AnimatedDivOnTrueValue } from "@/components/Animated/AnimatedDivOnTrueValue";
 import { MainLayout } from "@/components/Layouts/MainLayout";
+import { ProgressGraph } from "@/components/ProgressGraph";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -117,6 +118,9 @@ const NotePage = () => {
         <Separator />
         <AnimatePresence mode="wait">
           <h1 className="mt-5 text-xl font-bold">Previous completed quizzes</h1>
+          <div className="w-full h-[150px] my-10">
+            <ProgressGraph note={note} />
+          </div>
           <div>
             {note.quizzes.map((quiz, index) => {
               const questionsPercentageOfCompletion = Math.round(
