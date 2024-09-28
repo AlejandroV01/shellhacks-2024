@@ -2,19 +2,21 @@ import '@/styles/globals.css'
 import 'github-markdown-css'
 
 import HydrationZustand from '@/components/_helpers/HydrationZustand'
+import { ModeToggle } from '@/components/ModeToggle'
+import NavigationBar from '@/components/NavigationBar'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { Toaster } from '@/components/ui/sonner'
 import { AnimatePresence, motion } from 'framer-motion'
 import type { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
-
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter()
 
   return (
-    <ThemeProvider attribute='class' defaultTheme='light' enableSystem disableTransitionOnChange>
+    <ThemeProvider attribute='class' defaultTheme='dark' enableSystem disableTransitionOnChange>
       <HydrationZustand>
         <AnimatePresence mode='wait'>
+          <NavigationBar />
           <motion.div
             className='theme-dark'
             key={router.route}
