@@ -1,13 +1,29 @@
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import { getQuizScore } from "@/lib/getQuizScore";
 import { cn } from "@/lib/utils";
 import { IQuiz } from "@/store/useGlobalStore";
+import { useRouter } from "next/router";
 
 type Props = {
   quiz: IQuiz;
 };
 
 export const QuizResults = ({ quiz }: Props) => {
+  const router = useRouter();
+
+  const returnToNoteButton = () => {
+    return (
+      <Button
+        onClick={() => {
+          router.push(`/${quiz.noteId}`);
+        }}
+      >
+        Return To Note
+      </Button>
+    );
+  };
+
   const renderQuizResults = () => {
     return quiz.questions.map((question) => {
       const correctAnswer = question.answers.find(
@@ -40,17 +56,25 @@ export const QuizResults = ({ quiz }: Props) => {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold">
-        Result: {getQuizScore({ quiz }).percent}%
-      </h1>
-      <div>
-        <p>
-          You got {getQuizScore({ quiz }).correctAnswers.length} out of{" "}
-          {quiz.questions.length} questions correct
-        </p>
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold">
+            Result: {getQuizScore({ quiz }).percent}%
+          </h1>
+          <div>
+            <p>
+              You got {getQuizScore({ quiz }).correctAnswers.length} out of{" "}
+              {quiz.questions.length} questions correct
+            </p>
+          </div>
+        </div>
+        {returnToNoteButton()}
       </div>
 
       <div>{renderQuizResults()}</div>
+      <div className="flex justify-end items-center">
+        {returnToNoteButton()}
+      </div>
     </div>
   );
 };
