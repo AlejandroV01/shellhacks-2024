@@ -6,7 +6,6 @@ import useGlobalStore, { INote } from '@/store/useGlobalStore'
 import { Terminal } from 'lucide-react'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
-import { ModeToggle } from '../ModeToggle'
 import { Button } from '../ui/button'
 import { Card, CardContent, CardFooter } from '../ui/card'
 import { Textarea } from '../ui/textarea'
@@ -57,15 +56,6 @@ export const LandingPage = () => {
       <div className='fixed top-0 left-0 flex items-center justify-center w-full mt-20'>
         <BackgroundAnimation />
       </div>
-      <nav className='flex justify-between w-full'>
-        <div className='flex items-center gap-1'>
-          <img src='/images/Logo.png' alt='' className='w-[60px]' />
-          <span>GPT Teacher</span>
-        </div>
-        <div>
-          <ModeToggle />
-        </div>
-      </nav>
       <section className='flex flex-col items-center w-full mt-14 gap-5 max-w-[1000px]'>
         <span>GPT Teacher | The best teacher ever!</span>
         <h2 className='text-5xl'>
