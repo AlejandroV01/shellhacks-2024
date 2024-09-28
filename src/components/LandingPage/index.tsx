@@ -65,13 +65,13 @@ export const LandingPage = () => {
     <main className='p-10 flex flex-col items-center w-full bg-transparent mb-[200px]'>
       <Link className='flex items-center gap-1 absolute top-4 left-4' href={'/'}>
         <img src='/images/Logo.png' alt='' className='w-[50px]' />
-        <span>GPT Teacher</span>
+        <span>Quiz Sensei</span>
       </Link>
       <div className='fixed top-0 left-0 flex items-center justify-center w-full mt-20'>
         <BackgroundAnimation />
       </div>
       <section className='flex flex-col items-center w-full mt-14 gap-5 max-w-[1000px]'>
-        <span>GPT Teacher | The best teacher ever!</span>
+        <span>Quiz Sensei | The best teacher ever!</span>
         <h2 className='text-5xl'>
           <span className='font-bold'>Quiz</span> at the speed of light!
         </h2>
