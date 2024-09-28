@@ -2,6 +2,7 @@ import { AnimatedDivOnTrueValue } from "@/components/Animated/AnimatedDivOnTrueV
 import { MainLayout } from "@/components/Layouts/MainLayout";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import useGlobalStore from "@/store/useGlobalStore";
 import { Separator } from "@radix-ui/react-select";
@@ -74,13 +75,15 @@ const NotePage = () => {
             onClick={() => {
               setSelectedQuizId("new");
             }}
+            whileHover={{
+              y: -5,
+            }}
             animate={{
               scale: selectedQuizId === "new" ? 1.05 : 1,
-              opacity: selectedQuizId !== "new" ? 0.5 : 1,
             }}
             transition={{ duration: 0.5, type: "spring" }}
             className={cn(
-              "my-5 border p-5 rounded-xl border-gray-500 hover:-translate-y-1 cursor-pointer hover:border-gray-300",
+              "my-5 border p-5 rounded-xl border-gray-500 hover:-translate-y-1 cursor-pointer",
               selectedQuizId === "new" &&
                 "border-blue-500 hover:border-blue-500"
             )}
@@ -96,7 +99,7 @@ const NotePage = () => {
 
         <Separator />
         <AnimatePresence mode="wait">
-          <h1>Previous completed quizzes</h1>
+          <h1 className="mt-5 text-xl font-bold">Previous completed quizzes</h1>
           <div>
             {note.quizzes.map((quiz, index) => (
               <div key={quiz.id}>
@@ -104,19 +107,29 @@ const NotePage = () => {
                   onClick={() => {
                     setSelectedQuizId(quiz.id);
                   }}
+                  whileHover={{
+                    y: -5,
+                  }}
                   animate={{
                     scale: selectedQuizId === quiz.id ? 1.05 : 1,
-                    opacity: selectedQuizId !== quiz.id ? 0.5 : 1,
                   }}
                   transition={{ duration: 0.5, type: "spring" }}
                   className={cn(
-                    "my-5 border p-5 rounded-xl border-gray-500 hover:-translate-y-1 cursor-pointer hover:border-gray-300",
+                    "my-5 border p-5 rounded-xl border-gray-500 hover:-translate-y-1 cursor-pointer",
                     selectedQuizId === quiz.id &&
                       "border-blue-500 hover:border-blue-500"
                   )}
                 >
                   <h2 className="text-2xl font-bold">Quiz {index + 1}</h2>
                   <p className="text-gray-400">HARDCODED - 2 hours ago</p>
+                  <Progress
+                    value={
+                      ((quiz.currentQuestionIndex + 1) /
+                        quiz.questions.length) *
+                      100
+                    }
+                    className="mt-3"
+                  />
                 </motion.div>
                 {selectedQuizId === quiz.id &&
                   continueToQuizButton({ quizId: quiz.id })}
