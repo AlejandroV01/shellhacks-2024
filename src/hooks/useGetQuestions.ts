@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 export const useGetQuestions = () => {
-  const { notes, updateNote, updateQuiz } = useGlobalStore();
+  const { notes, updateQuiz } = useGlobalStore();
   const router = useRouter();
 
   const noteId = router.query.noteId as string;
@@ -54,10 +54,6 @@ export const useGetQuestions = () => {
       }
 
       const questions = data.data.questions;
-
-      updateNote(noteId, {
-        title: data.data.title,
-      });
 
       updateQuiz(noteId, quizId, {
         questions,
