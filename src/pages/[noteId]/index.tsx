@@ -74,13 +74,15 @@ const NotePage = () => {
             onClick={() => {
               setSelectedQuizId("new");
             }}
+            whileHover={{
+              y: -5,
+            }}
             animate={{
               scale: selectedQuizId === "new" ? 1.05 : 1,
-              opacity: selectedQuizId !== "new" ? 0.5 : 1,
             }}
             transition={{ duration: 0.5, type: "spring" }}
             className={cn(
-              "my-5 border p-5 rounded-xl border-gray-500 hover:-translate-y-1 cursor-pointer hover:border-gray-300",
+              "my-5 border p-5 rounded-xl border-gray-500 hover:-translate-y-1 cursor-pointer",
               selectedQuizId === "new" &&
                 "border-blue-500 hover:border-blue-500"
             )}
@@ -96,7 +98,7 @@ const NotePage = () => {
 
         <Separator />
         <AnimatePresence mode="wait">
-          <h1>Previous completed quizzes</h1>
+          <h1 className="mt-5 text-xl font-bold">Previous completed quizzes</h1>
           <div>
             {note.quizzes.map((quiz, index) => (
               <div key={quiz.id}>
@@ -104,13 +106,15 @@ const NotePage = () => {
                   onClick={() => {
                     setSelectedQuizId(quiz.id);
                   }}
+                  whileHover={{
+                    y: -5,
+                  }}
                   animate={{
                     scale: selectedQuizId === quiz.id ? 1.05 : 1,
-                    opacity: selectedQuizId !== quiz.id ? 0.5 : 1,
                   }}
                   transition={{ duration: 0.5, type: "spring" }}
                   className={cn(
-                    "my-5 border p-5 rounded-xl border-gray-500 hover:-translate-y-1 cursor-pointer hover:border-gray-300",
+                    "my-5 border p-5 rounded-xl border-gray-500 hover:-translate-y-1 cursor-pointer",
                     selectedQuizId === quiz.id &&
                       "border-blue-500 hover:border-blue-500"
                   )}
