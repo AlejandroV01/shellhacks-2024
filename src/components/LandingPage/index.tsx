@@ -86,8 +86,11 @@ export const LandingPage = () => {
         <span className="text-foreground/50">
           One button away from creating a quiz based on your notes.
         </span>
-        <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-          <Card className="w-full pt-6 backdrop-blur-2xl bg-background/40">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="w-full backdrop-blur-lg bg-background/40"
+        >
+          <Card className="w-full pt-6 backdrop-blur-lg bg-background/20">
             <CardContent>
               <Textarea
                 {...register("notes", {
@@ -118,7 +121,7 @@ export const LandingPage = () => {
         {notes.length > 0 &&
           notes.map((note) => {
             return (
-              <div className="w-full" key={note.id}>
+              <div className="w-full rounded-lg" key={note.id}>
                 <motion.div
                   key={note.id}
                   onClick={() => {
@@ -130,12 +133,12 @@ export const LandingPage = () => {
                   animate={{
                     scale: selectedTempNoteId === note.id ? 1.05 : 1,
                   }}
-                  className="w-full"
+                  className="w-full backdrop-blur-lg z-10 bg-background/20 rounded-lg"
                   transition={{ duration: 0.5, type: "spring" }}
                 >
-                  <Card className="w-full pt-6 backdrop-blur-2xl bg-background/40 cursor-pointer">
+                  <Card className="w-full pt-6 backdrop-blur-2xl bg-background/40 cursor-pointer ">
                     <CardContent>
-                      <h3 className="text-xl font-bold">{note.id}</h3>
+                      <h3 className="text-xl font-bold">{note.title}</h3>
                       <p className="truncate">{note.description}</p>
                     </CardContent>
                   </Card>
