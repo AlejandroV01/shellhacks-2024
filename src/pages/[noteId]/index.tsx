@@ -51,10 +51,7 @@ const NotePage = () => {
     return (
       <AnimatedDivOnTrueValue condition={true}>
         <Separator className="my-5" />
-        <div className="flex justify-between ">
-          <Link href="/enter-user-data">
-            <Button variant="outline">Back</Button>
-          </Link>
+        <div className="flex justify-end">
           <div className="flex space-x-3">
             <Button onClick={() => handleCreateNewQuiz({ quizId })}>
               {getButtonTitle()}
