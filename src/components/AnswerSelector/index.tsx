@@ -78,14 +78,6 @@ export const AnswerSelector = ({ quiz }: Props) => {
     handleClearDeepDive();
   };
 
-  const getAnimationIndex = () => {
-    if (isShowingResults) {
-      return 9999;
-    }
-
-    return quiz.currentQuestionIndex;
-  };
-
   const executeScroll = () => {
     if (scrollToDeepDiveRef.current) {
       scrollToDeepDiveRef.current.scrollIntoView({
@@ -146,10 +138,6 @@ export const AnswerSelector = ({ quiz }: Props) => {
     const currentQuestion = quiz.questions[quiz.currentQuestionIndex];
     const isLastQuestion =
       quiz.currentQuestionIndex === quiz.questions.length - 1;
-
-    if (isShowingResults) {
-      return <QuizResults />;
-    }
 
     if (currentQuestion) {
       return (
@@ -238,17 +226,35 @@ export const AnswerSelector = ({ quiz }: Props) => {
 
   return (
     <div>
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={getAnimationIndex()}
-          initial={{ x: 30, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: -30, opacity: 0 }}
-          transition={{ duration: 0.4 }}
-        >
-          {renderSelectedQuestion()}
-        </motion.div>
-      </AnimatePresence>
+      {!isShowingResults && (
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={quiz.currentQuestionIndex}
+            initial={{ x: 30, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: -30, opacity: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            {renderSelectedQuestion()}
+          </motion.div>
+        </AnimatePresence>
+      )}
+
+      {isShowingResults && (
+        <AnimatePresence mode="wait">
+          {isShowingResults && (
+            <motion.div
+              initial={{ x: 30, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: -30, opacity: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              <QuizResults quiz={quiz} />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      )}
+
       <AnimatePresence mode="wait">
         <motion.div
           key={markdown}
