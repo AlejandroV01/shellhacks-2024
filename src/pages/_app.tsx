@@ -1,5 +1,3 @@
-import "@/styles/base.css";
-import "@/styles/embla.css";
 import "@/styles/globals.css";
 import "github-markdown-css";
 
