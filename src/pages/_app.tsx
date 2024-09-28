@@ -1,27 +1,22 @@
-import "@/styles/globals.css";
-import "github-markdown-css";
+import '@/styles/globals.css'
+import 'github-markdown-css'
 
-import HydrationZustand from "@/components/_helpers/HydrationZustand";
-import { ThemeProvider } from "@/components/ThemeProvider";
-import { Toaster } from "@/components/ui/sonner";
-import { AnimatePresence, motion } from "framer-motion";
-import type { AppProps } from "next/app";
-import { useRouter } from "next/router";
+import HydrationZustand from '@/components/_helpers/HydrationZustand'
+import { ThemeProvider } from '@/components/ThemeProvider'
+import { Toaster } from '@/components/ui/sonner'
+import { AnimatePresence, motion } from 'framer-motion'
+import type { AppProps } from 'next/app'
+import { useRouter } from 'next/router'
 
 export default function App({ Component, pageProps }: AppProps) {
-  const router = useRouter();
+  const router = useRouter()
 
   return (
-    <ThemeProvider
-      attribute="class"
-      defaultTheme="light"
-      enableSystem
-      disableTransitionOnChange
-    >
+    <ThemeProvider attribute='class' defaultTheme='light' enableSystem disableTransitionOnChange>
       <HydrationZustand>
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode='wait'>
           <motion.div
-            className="theme-dark"
+            className='theme-dark'
             key={router.route}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -34,5 +29,5 @@ export default function App({ Component, pageProps }: AppProps) {
         </AnimatePresence>
       </HydrationZustand>
     </ThemeProvider>
-  );
+  )
 }

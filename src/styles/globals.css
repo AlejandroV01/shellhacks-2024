@@ -15,7 +15,7 @@
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  @apply bg-background;
   font-family: Inter, Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif Arial, Helvetica, sans-serif;
 }
 
@@ -115,4 +115,8 @@ body {
     height: 850px;
     filter: blur(100px); /* 500px / 5 = 100px */
   }
+}
+
+button {
+  color: white !important;
 }
