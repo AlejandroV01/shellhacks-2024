@@ -63,7 +63,7 @@ export const LandingPage = () => {
         </h2>
         <span className='text-foreground/50'>One button away from creating a quiz based on your notes.</span>
         <form onSubmit={handleSubmit(onSubmit)} className='w-full'>
-          <Card className='w-full pt-6 backdrop-blur-2xl bg-background/40'>
+          <Card className='w-full pt-6 backdrop-blur-2xl bg-background/70'>
             <CardContent>
               <Textarea
                 {...register('notes', {
@@ -81,7 +81,7 @@ export const LandingPage = () => {
         </form>
         <h3 className='text-xl text-foreground/80 mr-auto'>Previous Notes</h3>
         {notes.length === 0 && (
-          <Alert className='backdrop-blur-2xl bg-background/40'>
+          <Alert className='backdrop-blur-2xl bg-background/70'>
             <Terminal className='h-4 w-4' />
             <AlertTitle className='font-semibold text-lg'>Heads up!</AlertTitle>
             <AlertDescription>Add your first note using the box above!</AlertDescription>
@@ -102,7 +102,7 @@ const NoteCard = ({ noteId, noteTitle, noteDescription }: { noteId: string; note
     router.push(`/${noteId}`)
   }
   return (
-    <Card className='w-full pt-6 backdrop-blur-2xl bg-background/40'>
+    <Card className='w-full pt-6 backdrop-blur-2xl bg-background/70'>
       <CardContent>
         <h3 className='text-xl font-bold'>{noteTitle}</h3>
         <p className='truncate'>{noteDescription}</p>
