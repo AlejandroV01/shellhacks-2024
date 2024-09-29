@@ -36,10 +36,10 @@ const About = () => {
   const shuffledDevs = devs.sort(() => Math.random() - 0.5)
   //deploy
   return (
-    <div className='w-full flex flex-col items-center gap-5 mt-20 p-4'>
-      <Link href={'/'} className='flex items-center gap-1 absolute top-4 left-4'>
+    <div className='w-full flex flex-col items-center gap-5 p-4'>
+      <Link href={'/'} className='flex items-center gap-1 mr-auto z-40'>
         <img src='/images/Logo.png' alt='' className='w-[55px]' />
-        <span>Quiz Sensei</span>
+        <span className='font-bold'>Quiz Sensei</span>
       </Link>
       <div className='w-full flex flex-col items-center gap-5 max-w-[1000px]'>
         <h4 className='font-bold text-2xl mr-auto'>About Quiz Sensei</h4>
