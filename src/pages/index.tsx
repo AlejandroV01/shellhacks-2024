@@ -1,6 +1,5 @@
 import { LandingPage } from "@/components/LandingPage";
 import localFont from "next/font/local";
-import Head from "next/head";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
