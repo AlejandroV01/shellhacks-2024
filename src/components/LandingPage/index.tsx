@@ -20,6 +20,7 @@ import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter } from "../ui/card";
 import { Textarea } from "../ui/textarea";
 import BackgroundAnimation from "./BackgroundAnimated";
+import { HowItWorksDialog } from "./HowItWorksDialog";
 
 type InputFields = {
   notes: string;
@@ -127,7 +128,9 @@ export const LandingPage = () => {
             </CardContent>
 
             <CardFooter className="flex flex-col items-end transition-all">
-              <div className="flex justify-end">
+              <div className="flex justify-between w-full">
+                <HowItWorksDialog />
+
                 <Button className="space-x-2 flex" disabled={isGetTitleLoading}>
                   <p>Start Quiz</p>
                   {isGetTitleLoading ? (
