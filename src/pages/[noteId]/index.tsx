@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 import useGlobalStore from "@/store/useGlobalStore";
 import { Separator } from "@radix-ui/react-select";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChartArea, Map } from "lucide-react";
+import { ArrowRight, BookOpenCheck, ChartArea, Map } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -54,8 +54,12 @@ const NotePage = () => {
         <Separator className="my-5" />
         <div className="flex justify-end">
           <div className="flex space-x-3">
-            <Button onClick={() => handleCreateNewQuiz({ quizId })}>
-              {getButtonTitle()}
+            <Button
+              className="flex space-x-2"
+              onClick={() => handleCreateNewQuiz({ quizId })}
+            >
+              <span>{getButtonTitle()}</span>
+              <ArrowRight className="h-4 w-4" />
             </Button>
           </div>
         </div>
@@ -103,8 +107,13 @@ const NotePage = () => {
                 "border-blue-500 hover:border-blue-500"
             )}
           >
-            <h2 className="text-2xl font-bold">New quiz</h2>
-            <p className="text-gray-400">Start a new quiz</p>
+            <div className="flex items-center space-x-5">
+              <BookOpenCheck />
+              <div>
+                <h2 className="text-2xl font-bold">New quiz</h2>
+                <p className="text-gray-400">Start a new quiz</p>
+              </div>
+            </div>
           </motion.div>
           <div className="mb-10">
             {selectedQuizId === "new" &&
