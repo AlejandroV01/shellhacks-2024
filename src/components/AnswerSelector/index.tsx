@@ -54,9 +54,7 @@ export const AnswerSelector = ({ quiz }: Props) => {
       return;
     }
 
-    sendGAEvent({
-      action: "next_question",
-    });
+    sendGAEvent("event", "next_question");
 
     updateQuiz(quiz.noteId, quiz.id, {
       currentQuestionIndex: quiz.currentQuestionIndex + 1,
@@ -68,9 +66,7 @@ export const AnswerSelector = ({ quiz }: Props) => {
   const handleGoToResults = () => {
     setIsShowingResults(true);
 
-    sendGAEvent({
-      action: "go_to_results",
-    });
+    sendGAEvent("event", "go_to_results");
   };
 
   const handleStartOver = () => {
