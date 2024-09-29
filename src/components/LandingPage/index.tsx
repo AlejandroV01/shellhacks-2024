@@ -114,12 +114,12 @@ export const LandingPage = () => {
         <h2 className="text-5xl">
           <span className="font-bold">Quiz</span> at the speed of light!
         </h2>
-        <span className="text-foreground/50">
+        <span className="text-foreground/30">
           One button away from creating a quiz based on your notes.
         </span>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="w-full bg-background/50 z-30 "
+          className="w-full bg-background/30 z-30 "
         >
           <Card className="w-full pt-6 bg-transparent">
             <CardContent>
@@ -209,7 +209,7 @@ export const LandingPage = () => {
                   className="w-full z-10 rounded-lg"
                   transition={{ duration: 0.5, type: "spring" }}
                 >
-                  <Card className="w-full pt-6 cursor-pointer bg-background/50">
+                  <Card className="w-full pt-6 cursor-pointer bg-background/30">
                     <CardContent>
                       <h3 className="text-xl font-bold">{note.title}</h3>
                       <p className="truncate">{note.description}</p>
