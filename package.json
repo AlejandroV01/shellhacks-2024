@@ -29,6 +29,7 @@
     "next-themes": "^0.3.0",
     "nextjs-progressbar": "^0.0.16",
     "openai": "^4.65.0",
+    "raw-loader": "^4.0.2",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.53.0",
