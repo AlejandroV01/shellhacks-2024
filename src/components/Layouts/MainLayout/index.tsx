@@ -71,7 +71,7 @@ export const MainLayout = ({ children }: Props) => {
   return (
     <div className="max-w-4xl m-auto p-10">
       <div className="my-10">
-        <Link className="flex items-center gap-2" href={"/"}>
+        <Link className="flex items-center gap-2 my-3" href={"/"}>
           <img src="/images/Logo.png" alt="" className="w-[30px]" />
           <h1 className="text-2xl font-bold">GPT Teacher</h1>
         </Link>
