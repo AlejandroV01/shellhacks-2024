@@ -202,6 +202,8 @@ export const AnswerSelector = ({ quiz }: Props) => {
                               question: currentQuestion.question,
                             });
 
+                            sendGAEvent("event", "deep_dive");
+
                             setTimeout(() => {
                               executeScroll();
                             }, 200);
