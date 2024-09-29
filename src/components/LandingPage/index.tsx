@@ -182,7 +182,10 @@ export const LandingPage = () => {
         {notes.length > 0 &&
           notes.map((note) => {
             return (
-              <div className="w-full rounded-lg" key={note.id}>
+              <div
+                className="w-full rounded-lg"
+                key={`${note.id}-${note.title}`}
+              >
                 <motion.div
                   key={note.id}
                   onClick={() => {
