@@ -19,16 +19,16 @@ const MarkdownRenderer = ({ markdown }: Props) => {
     mermaid.initialize({
       startOnLoad: true,
       darkMode: true,
-      theme: "dark",
+      theme: 'dark',
       flowchart: {
         htmlLabels: false,
       },
-    });
-    mermaid.contentLoaded();
-  }, [markdown, style]);
+    })
+    mermaid.contentLoaded()
+  }, [markdown, style])
 
   return (
-    <div className='markdown-body'>
+    <div className='markdown-body [&>*]:text-foreground'>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
