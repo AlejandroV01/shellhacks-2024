@@ -165,7 +165,9 @@ const NotePage = () => {
                     )}
                   >
                     <div className="flex items-baseline space-x-3 ">
-                      <h2 className="text-2xl font-bold">Quiz {index + 1}</h2>
+                      <h2 className="text-2xl font-bold">
+                        Quiz {note.quizzes.length - index}
+                      </h2>
                       <p>{isQuizCompleted ? "Completed" : "In Progress"}</p>
                     </div>
                     {isQuizCompleted && (
