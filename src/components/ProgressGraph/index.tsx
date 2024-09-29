@@ -8,6 +8,7 @@ import { Line, LineChart, ResponsiveContainer, XAxis } from "recharts";
 import { type ChartConfig } from "@/components/ui/chart";
 import { getQuizScore } from "@/lib/getQuizScore";
 import { INote } from "@/store/useGlobalStore";
+import { getDaysAgoQuiz } from "@/lib/getDaysAgoQuiz";
 
 const chartConfig = {
   desktop: {
@@ -20,16 +21,6 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-function formatDate(date: Date) {
-  const dateFormatted = new Date(date);
-
-  const month = String(dateFormatted.getMonth() + 1).padStart(2, "0"); // Add 1 because getMonth() returns 0-11
-  const day = String(dateFormatted.getDate()).padStart(2, "0");
-  const year = String(dateFormatted.getFullYear()).slice(-2); // Get last two digits of the year
-
-  return `${month}/${day}/${year}`;
-}
-
 export const ProgressGraph = ({ note }: { note: INote }) => {
   const noteQuizData = note.quizzes
     .map((quiz) => {
@@ -41,7 +32,7 @@ export const ProgressGraph = ({ note }: { note: INote }) => {
       const quizResults = getQuizScore({ quiz });
 
       return {
-        date: formatDate(quiz.createdAt),
+        date: getDaysAgoQuiz(new Date(quiz.createdAt)),
         score: quizResults.percent,
       };
     })
