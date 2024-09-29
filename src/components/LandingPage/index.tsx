@@ -111,10 +111,10 @@ export const LandingPage = () => {
           <span className="font-bold">Quiz Sensei</span> | The best teacher
           ever!
         </span>
-        <h2 className="text-5xl">
+        <h2 className="text-5xl text-center">
           <span className="font-bold">Quiz</span> at the speed of light!
         </h2>
-        <span className="text-foreground/30">
+        <span className="text-foreground/30 text-center">
           One button away from creating a quiz based on your notes.
         </span>
         <form
