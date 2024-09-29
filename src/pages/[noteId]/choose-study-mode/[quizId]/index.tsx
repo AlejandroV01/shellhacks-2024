@@ -17,7 +17,7 @@ const TestPage = () => {
     : null;
 
   const renderQuestions = () => {
-    if (true) {
+    if (isLoading) {
       return (
         <div>
           <div className="flex flex-col space-y-3">
