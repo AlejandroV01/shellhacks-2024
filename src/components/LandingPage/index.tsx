@@ -97,7 +97,7 @@ export const LandingPage = () => {
     <main className="sm:p-10 p-5 flex flex-col items-center w-full bg-transparent mb-[200px]">
       <div className="flex justify-between w-full items-center">
         <Link className="flex items-center gap-1" href={"/"}>
-          <img src="/images/Logo.png" alt="" className="w-[40px]" />
+          <img src="/images/Logo.png" alt="" className="w-[40px] h-[40px]" />
           <span className="font-bold">Quiz Sensei</span>
         </Link>
         <NavigationBar />
@@ -119,9 +119,9 @@ export const LandingPage = () => {
         </span>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="w-full backdrop-blur-lg bg-background/40"
+          className="w-full bg-background/50 z-30 "
         >
-          <Card className="w-full pt-6 backdrop-blur-lg bg-background/20 transition-all">
+          <Card className="w-full pt-6 bg-transparent">
             <CardContent>
               <Textarea
                 {...register("notes", {
@@ -180,7 +180,7 @@ export const LandingPage = () => {
           Previous Notes
         </h3>
         {notes.length === 0 && (
-          <Alert className="backdrop-blur-2xl bg-background/70">
+          <Alert className="bg-background/70">
             <Terminal className="h-4 w-4" />
             <AlertTitle className="font-semibold text-lg">Heads up!</AlertTitle>
             <AlertDescription>
@@ -206,10 +206,10 @@ export const LandingPage = () => {
                   animate={{
                     scale: selectedTempNoteId === note.id ? 1.05 : 1,
                   }}
-                  className="w-full backdrop-blur-lg z-10 bg-background/20 rounded-lg"
+                  className="w-full z-10 rounded-lg"
                   transition={{ duration: 0.5, type: "spring" }}
                 >
-                  <Card className="w-full pt-6 backdrop-blur-2xl bg-background/40 cursor-pointer ">
+                  <Card className="w-full pt-6 cursor-pointer bg-background/50">
                     <CardContent>
                       <h3 className="text-xl font-bold">{note.title}</h3>
                       <p className="truncate">{note.description}</p>
