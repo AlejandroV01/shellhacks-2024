@@ -1,15 +1,13 @@
-import { Line, LineChart, ResponsiveContainer, XAxis } from "recharts";
 import {
   ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { Line, LineChart, ResponsiveContainer, XAxis } from "recharts";
 
 import { type ChartConfig } from "@/components/ui/chart";
-import { INote } from "@/store/useGlobalStore";
 import { getQuizScore } from "@/lib/getQuizScore";
+import { INote } from "@/store/useGlobalStore";
 
 const chartConfig = {
   desktop: {
@@ -54,7 +52,6 @@ export const ProgressGraph = ({ note }: { note: INote }) => {
       <ResponsiveContainer width="100%" height="100%">
         <LineChart width={300} height={100} data={noteQuizData}>
           <ChartTooltip content={<ChartTooltipContent />} />
-          <ChartLegend content={<ChartLegendContent />} />
           <XAxis
             dataKey="date"
             tickLine={false}
