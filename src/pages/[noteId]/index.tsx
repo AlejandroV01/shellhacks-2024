@@ -1,5 +1,6 @@
 import { AnimatedDivOnTrueValue } from "@/components/Animated/AnimatedDivOnTrueValue";
 import { MainLayout } from "@/components/Layouts/MainLayout";
+import { ProgressGraph } from "@/components/ProgressGraph";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -8,7 +9,7 @@ import { cn } from "@/lib/utils";
 import useGlobalStore from "@/store/useGlobalStore";
 import { Separator } from "@radix-ui/react-select";
 import { AnimatePresence, motion } from "framer-motion";
-import { Map } from "lucide-react";
+import { ChartArea, Map } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -117,6 +118,21 @@ const NotePage = () => {
         <Separator />
         <AnimatePresence mode="wait">
           <h1 className="mt-5 text-xl font-bold">Previous completed quizzes</h1>
+          {note.quizzes.length <= 2 ? (
+            <Alert className="mt-3 mb-10">
+              <ChartArea className="h-4 w-4" />
+              <AlertTitle>Your progress graph</AlertTitle>
+              <AlertDescription>
+                Complete at least 3 quizzes to see a graph of your progress over
+                time.
+              </AlertDescription>
+            </Alert>
+          ) : (
+            <div className="w-full h-[150px] my-10">
+              <ProgressGraph note={note} />
+            </div>
+          )}
+
           <div>
             {note.quizzes.map((quiz, index) => {
               const questionsPercentageOfCompletion = Math.round(
