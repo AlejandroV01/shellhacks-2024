@@ -33,13 +33,13 @@ const studyModes: StudyModeType[] = [
     type: "multiple-choice",
     title: "Multiple choice",
     description:
-      "We will create multiple choice questions for you, and you choose wrong, we'll explain why and adapt the questions accordingly",
+      "Answer multiple-choice questions. If you choose incorrectly, we'll explain why and adjust the following questions to help you improve.",
   },
   {
     type: "true-or-false",
     title: "True or false",
     description:
-      "We will create true or false questions for you, and you choose wrong, we'll explain why and adapt the questions accordingly",
+      "Answer true/false questions. If you choose incorrectly, we'll explain why and adapt future questions to focus on areas needing improvement.",
   },
 ];
 
