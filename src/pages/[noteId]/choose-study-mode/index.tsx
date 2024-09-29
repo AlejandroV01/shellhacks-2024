@@ -118,7 +118,7 @@ const ChooseStudyMode = () => {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
                     transition={{ duration: 0.5, type: "spring" }}
-                    className="flex space-x-3 mt-5"
+                    className="grid grid-cols-2 space-x-3 mt-5 w-[400px] max-w-fit"
                   >
                     <div>
                       <Label>Difficulty</Label>
@@ -128,7 +128,7 @@ const ChooseStudyMode = () => {
                         }}
                         defaultValue={tempDifficulty}
                       >
-                        <SelectTrigger className="w-[140px]">
+                        <SelectTrigger className="w-full">
                           <SelectValue placeholder="Difficulty" />
                         </SelectTrigger>
                         <SelectContent>
@@ -146,7 +146,7 @@ const ChooseStudyMode = () => {
                         }}
                         defaultValue={tempQuestionAmount.toString()}
                       >
-                        <SelectTrigger className="w-[140px]">
+                        <SelectTrigger className="w-full">
                           <SelectValue placeholder="Questions" />
                         </SelectTrigger>
                         <SelectContent>

@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import NavigationBar from "@/components/NavigationBar";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -69,7 +70,10 @@ export const MainLayout = ({ children }: Props) => {
   });
 
   return (
-    <div className="max-w-4xl m-auto p-10">
+    <div className="max-w-4xl m-auto sm:p-10 p-5">
+      <div className="absolute top-5 right-5">
+        <NavigationBar />
+      </div>
       <div className="my-10">
         <Link className="flex items-center gap-2 my-3" href={"/"}>
           <img src="/images/Logo.png" alt="" className="w-[30px]" />
