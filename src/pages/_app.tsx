@@ -2,7 +2,6 @@ import "@/styles/globals.css";
 import "github-markdown-css";
 
 import HydrationZustand from "@/components/_helpers/HydrationZustand";
-import NavigationBar from "@/components/NavigationBar";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@vercel/analytics/react";
@@ -29,7 +28,6 @@ export default function App({ Component, pageProps }: AppProps) {
           <NextNProgress />
           <Analytics />
 
-          <NavigationBar />
           <motion.div
             className="theme-dark"
             key={router.route}

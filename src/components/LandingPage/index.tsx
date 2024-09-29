@@ -22,6 +22,7 @@ import { Textarea } from "../ui/textarea";
 import BackgroundAnimation from "./BackgroundAnimated";
 import { HowItWorksDialog } from "./HowItWorksDialog";
 import { sendGAEvent } from "@next/third-parties/google";
+import NavigationBar from "../NavigationBar";
 
 type InputFields = {
   notes: string;
@@ -94,13 +95,14 @@ export const LandingPage = () => {
 
   return (
     <main className="p-10 flex flex-col items-center w-full bg-transparent mb-[200px]">
-      <Link
-        className="flex items-center gap-1 absolute top-4 left-4"
-        href={"/"}
-      >
-        <img src="/images/Logo.png" alt="" className="w-[50px]" />
-        <span className="font-bold">Quiz Sensei</span>
-      </Link>
+      <div className="flex justify-between w-full items-center">
+        <Link className="flex items-center gap-1" href={"/"}>
+          <img src="/images/Logo.png" alt="" className="w-[40px]" />
+          <span className="font-bold">Quiz Sensei</span>
+        </Link>
+        <NavigationBar />
+      </div>
+
       <div className="fixed top-0 left-0 flex items-center justify-center w-full mt-20">
         <BackgroundAnimation />
       </div>
