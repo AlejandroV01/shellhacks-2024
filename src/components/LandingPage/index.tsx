@@ -94,7 +94,7 @@ export const LandingPage = () => {
   };
 
   return (
-    <main className="p-10 flex flex-col items-center w-full bg-transparent mb-[200px]">
+    <main className="sm:p-10 p-5 flex flex-col items-center w-full bg-transparent mb-[200px]">
       <div className="flex justify-between w-full items-center">
         <Link className="flex items-center gap-1" href={"/"}>
           <img src="/images/Logo.png" alt="" className="w-[40px]" />
