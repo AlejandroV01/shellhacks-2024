@@ -3,7 +3,14 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { generateRandomId } from "@/lib/generateRandomId";
 import { ApiGetTitleType } from "@/pages/api/get-title";
 import useGlobalStore, { INote } from "@/store/useGlobalStore";
-import { BookOpen, LoaderCircle, PencilLine, Terminal, X } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  ArrowRight,
+  LoaderCircle,
+  PencilLine,
+  Terminal,
+  X,
+} from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -13,7 +20,6 @@ import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter } from "../ui/card";
 import { Textarea } from "../ui/textarea";
 import BackgroundAnimation from "./BackgroundAnimated";
-import { AnimatePresence, motion } from "framer-motion";
 
 type InputFields = {
   notes: string;
@@ -204,7 +210,7 @@ export const LandingPage = () => {
                       onClick={() => handleEnterNote(note.id)}
                     >
                       <p>Open Note</p>
-                      <BookOpen className="h-4 w-4" />
+                      <ArrowRight className="h-4 w-4" />
                     </Button>
                   </div>
                 </AnimatedDivOnTrueValue>
