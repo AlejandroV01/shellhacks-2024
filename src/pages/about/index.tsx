@@ -34,7 +34,7 @@ const About = () => {
   ]
 
   const shuffledDevs = devs.sort(() => Math.random() - 0.5)
-
+  //deploy
   return (
     <div className='w-full flex flex-col items-center gap-5 mt-20 p-4'>
       <Link href={'/'} className='flex items-center gap-1 absolute top-4 left-4'>
