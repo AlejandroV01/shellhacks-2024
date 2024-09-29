@@ -26,7 +26,7 @@ const NotePage = () => {
 
   const handleCreateNewQuiz = ({ quizId }: { quizId: string }) => {
     if (quizId === "new") {
-      sendGAEvent("event", "create_new_quiz");
+      sendGAEvent("event", "create_new_quiz_note_page");
 
       router.push(`/${noteId}/choose-study-mode`);
       return;

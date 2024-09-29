@@ -8,6 +8,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { sendGAEvent } from "@next/third-parties/google";
 import Link from "next/link";
 import { useRouter } from "next/router";
 type Props = {
@@ -52,7 +53,12 @@ export const MainLayout = ({ children }: Props) => {
     const isLast = index === pathSegments.length - 1;
 
     return (
-      <BreadcrumbItem key={href}>
+      <BreadcrumbItem
+        onClick={() => {
+          sendGAEvent("event", `breadcrumb_click_(${getCorrectSegment()})`);
+        }}
+        key={href}
+      >
         {isLast ? (
           <BreadcrumbPage className="text-foreground">
             {getCorrectSegment()}
@@ -81,7 +87,11 @@ export const MainLayout = ({ children }: Props) => {
         </Link>
         <Breadcrumb>
           <BreadcrumbList>
-            <BreadcrumbItem>
+            <BreadcrumbItem
+              onClick={() => {
+                sendGAEvent("event", `breadcrumb_click_(Home)`);
+              }}
+            >
               <Link href="/">
                 <BreadcrumbLink>Home</BreadcrumbLink>
               </Link>

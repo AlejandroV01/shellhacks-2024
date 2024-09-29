@@ -79,7 +79,7 @@ const ChooseStudyMode = () => {
 
     addQuiz({ quiz });
 
-    sendGAEvent("event", `choose_study_mode_${tempSelection}`);
+    sendGAEvent("event", `choose_study_mode_(${tempSelection})`);
 
     setTimeout(() => {
       router.push(`/${noteId}/choose-study-mode/${quiz.id}`);
