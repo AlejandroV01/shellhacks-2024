@@ -273,7 +273,7 @@ export const AnswerSelector = ({ quiz }: Props) => {
                 <Skeleton className="h-48 w-full" />
               </div>
             )}
-            {markdown && (
+            {markdown && !isShowingResults && (
               <MarkdownRenderer markdown={markdown.replace(/\\n/g, "\n")} />
             )}
           </div>
