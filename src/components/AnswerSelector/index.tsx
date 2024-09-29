@@ -149,7 +149,7 @@ export const AnswerSelector = ({ quiz }: Props) => {
     if (currentQuestion) {
       return (
         <div>
-          <div className=" my-10 mx-auto flex justify-center">
+          <div className="my-10 mx-auto flex justify-center">
             <h1 className="text-3xl">{currentQuestion.question}</h1>
           </div>
           {currentQuestion.answers.map((answer, index) => {
@@ -169,7 +169,7 @@ export const AnswerSelector = ({ quiz }: Props) => {
           <AnimatedDivOnTrueValue
             condition={currentQuestion.userSelection !== undefined}
             delay={0.5}
-            className="flex py-3 justify-between"
+            className="flex py-3 flex-col justify-between sm:flex-row space-y-3 sm:space-y-0"
           >
             <div>
               {isLastQuestion && (
@@ -183,10 +183,10 @@ export const AnswerSelector = ({ quiz }: Props) => {
               )}
             </div>
 
-            <div className="flex align-middle space-x-3">
+            <div className="flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-3">
               {!markdown && !isLoading && (
                 <motion.div
-                  className="flex justify-end"
+                  className="flex justify-end w-full"
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
@@ -194,8 +194,9 @@ export const AnswerSelector = ({ quiz }: Props) => {
                 >
                   <TooltipProvider>
                     <Tooltip>
-                      <TooltipTrigger>
+                      <TooltipTrigger className="w-full">
                         <Button
+                          className="w-full"
                           variant="outline"
                           onClick={() => {
                             handleGetQuestionDeepDive({

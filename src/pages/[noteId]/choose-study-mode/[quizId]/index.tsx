@@ -59,7 +59,7 @@ const TestPage = () => {
     }
 
     return (
-      <div className="px-10">
+      <div className="px-5 sm:px-10">
         <AnswerSelector quiz={localStorageUpdatedQuiz} />
       </div>
     );
