@@ -4,7 +4,7 @@ import { generateRandomId } from '@/lib/generateRandomId'
 import { ApiGetTitleType } from '@/pages/api/get-title'
 import useGlobalStore, { INote } from '@/store/useGlobalStore'
 import { motion } from 'framer-motion'
-import { BookOpen, PencilLine, Terminal } from 'lucide-react'
+import { BookOpen, LoaderCircle, PencilLine, Terminal } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
@@ -23,7 +23,7 @@ export const LandingPage = () => {
   const router = useRouter()
 
   const [selectedTempNoteId, setSelectedTempNoteId] = useState<string | null>(null)
-
+  const [isGetTitleLoading, setIsGetTitleLoading] = useState(false)
   const {
     handleSubmit,
     register,
@@ -35,6 +35,7 @@ export const LandingPage = () => {
   }
 
   const onSubmit = async (data: InputFields) => {
+    setIsGetTitleLoading(true)
     const response = await fetch('/api/get-title', {
       method: 'POST',
       body: JSON.stringify({ userInput: data.notes }),
@@ -57,6 +58,7 @@ export const LandingPage = () => {
     addNote({
       note: newNote,
     })
+    setIsGetTitleLoading(false)
 
     router.push(`/${newNote.id}/choose-study-mode`)
   }
@@ -89,9 +91,9 @@ export const LandingPage = () => {
               {errors.notes && <span className='text-red-500'>{errors.notes.message}</span>}
             </CardContent>
             <CardFooter className='flex justify-end'>
-              <Button className='space-x-2 flex'>
+              <Button className='space-x-2 flex' disabled={isGetTitleLoading}>
                 <p>Start Quiz</p>
-                <PencilLine className='h-4 w-4' />
+                {isGetTitleLoading ? <LoaderCircle className='h-4 w-4 animate-spin' /> : <PencilLine className='h-4 w-4' />}
               </Button>
             </CardFooter>
           </Card>
