@@ -1,6 +1,7 @@
 import { AnswerSelector } from "@/components/AnswerSelector";
 import { MainLayout } from "@/components/Layouts/MainLayout";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useGetQuestions } from "@/hooks/useGetQuestions";
 import useGlobalStore from "@/store/useGlobalStore";
 import { CircleX } from "lucide-react";
@@ -19,7 +20,16 @@ const TestPage = () => {
     if (isLoading) {
       return (
         <div>
-          <p>Loading...</p>
+          <div className="flex flex-col space-y-3">
+            <Skeleton className="w-full h-10" />
+            <Skeleton className="w-full h-10" />
+            <Skeleton className="w-[20%] h-10" />
+          </div>
+
+          <div className="flex flex-col space-y-5 mt-5 p-5">
+            <Skeleton className="w-full h-20" />
+            <Skeleton className="w-full h-20" />
+          </div>
         </div>
       );
     }
