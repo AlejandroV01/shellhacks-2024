@@ -4,6 +4,7 @@ import { ProgressGraph } from "@/components/ProgressGraph";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { getDaysAgoQuiz } from "@/lib/getDaysAgoQuiz";
 import { getQuizScore } from "@/lib/getQuizScore";
 import { cn } from "@/lib/utils";
 import useGlobalStore from "@/store/useGlobalStore";
@@ -189,7 +190,9 @@ const NotePage = () => {
                       />
                     )}
 
-                    <p className="text-gray-400">Created - 2 hours ago</p>
+                    <p className="text-gray-400">
+                      Created - {getDaysAgoQuiz(new Date(quiz.createdAt))}
+                    </p>
                   </motion.div>
                   {selectedQuizId === quiz.id &&
                     continueToQuizButton({
