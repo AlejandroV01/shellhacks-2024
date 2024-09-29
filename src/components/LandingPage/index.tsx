@@ -21,6 +21,7 @@ import { Card, CardContent, CardFooter } from "../ui/card";
 import { Textarea } from "../ui/textarea";
 import BackgroundAnimation from "./BackgroundAnimated";
 import { HowItWorksDialog } from "./HowItWorksDialog";
+import { sendGAEvent } from "@next/third-parties/google";
 
 type InputFields = {
   notes: string;
@@ -43,6 +44,7 @@ export const LandingPage = () => {
   } = useForm<InputFields>();
 
   const handleEnterNote = (noteId: string) => {
+    sendGAEvent("event", "open_note_homepage");
     router.push(`/${noteId}`);
   };
 
@@ -78,7 +80,9 @@ export const LandingPage = () => {
       addNote({
         note: newNote,
       });
+
       setIsGetTitleLoading(false);
+      sendGAEvent("event", "create_quiz_homepage");
 
       router.push(`/${newNote.id}/choose-study-mode`);
     } catch (error) {

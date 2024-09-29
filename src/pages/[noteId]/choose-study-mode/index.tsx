@@ -15,6 +15,7 @@ import { generateRandomId } from "@/lib/generateRandomId";
 import { cn } from "@/lib/utils";
 import { StoreAppType } from "@/store/types/AppType";
 import useGlobalStore, { IQuiz } from "@/store/useGlobalStore";
+import { sendGAEvent } from "@next/third-parties/google";
 
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
@@ -77,6 +78,8 @@ const ChooseStudyMode = () => {
     };
 
     addQuiz({ quiz });
+
+    sendGAEvent("event", `choose_study_mode_${tempSelection}`);
 
     setTimeout(() => {
       router.push(`/${noteId}/choose-study-mode/${quiz.id}`);

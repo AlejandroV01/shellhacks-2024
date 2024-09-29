@@ -8,6 +8,7 @@ import { getDaysAgoQuiz } from "@/lib/getDaysAgoQuiz";
 import { getQuizScore } from "@/lib/getQuizScore";
 import { cn } from "@/lib/utils";
 import useGlobalStore from "@/store/useGlobalStore";
+import { sendGAEvent } from "@next/third-parties/google";
 import { Separator } from "@radix-ui/react-select";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, BookOpenCheck, ChartArea, Map } from "lucide-react";
@@ -25,10 +26,13 @@ const NotePage = () => {
 
   const handleCreateNewQuiz = ({ quizId }: { quizId: string }) => {
     if (quizId === "new") {
+      sendGAEvent("event", "create_new_quiz");
+
       router.push(`/${noteId}/choose-study-mode`);
       return;
     }
 
+    sendGAEvent("event", "review_quiz");
     router.push(`/${noteId}/choose-study-mode/${quizId}`);
   };
 

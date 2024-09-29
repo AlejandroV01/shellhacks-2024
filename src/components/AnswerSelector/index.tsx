@@ -80,6 +80,8 @@ export const AnswerSelector = ({ quiz }: Props) => {
       questions: newQuizQuestions,
     });
 
+    sendGAEvent("event", "restart_quiz");
+
     handleClearDeepDive();
   };
 
