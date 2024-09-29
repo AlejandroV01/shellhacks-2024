@@ -6,7 +6,6 @@ import { ArrowRight, Lightbulb } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { AnimatedDivOnTrueValue } from "../Animated/AnimatedDivOnTrueValue";
-import MarkdownRenderer from "../MarkdownRenderer";
 import { Button } from "../ui/button";
 import { Skeleton } from "../ui/skeleton";
 import {
@@ -17,6 +16,7 @@ import {
 } from "../ui/tooltip";
 import { AnswerButton } from "./_helpers/AnswerButton";
 import { QuizResults } from "./_helpers/QuizResults";
+import MarkdownRenderer from "../MarkdownRenderer";
 
 type Props = {
   quiz: IQuiz;
