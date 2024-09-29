@@ -44,7 +44,9 @@ const About = () => {
         <span className='font-bold'>Quiz Sensei</span>
       </Link>
       <div className='w-full flex flex-col items-center gap-5 max-w-[1000px]'>
-        <h4 className='font-bold text-2xl mr-auto'>Meet the Team</h4>
+        <div className='w-full'>
+          <MarkdownRenderer markdown={'## Meet the Team'} />
+        </div>
         <div className='flex flex-wrap w-full gap-5 justify-center'>
           {shuffledDevs.map((dev, index) => {
             return (

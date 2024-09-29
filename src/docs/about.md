@@ -1,4 +1,4 @@
-# Inspiration
+## Inspiration
 
 We were inspired by the idea of making studying smarter, not harder. As students, we often struggled with effective revision techniques and thought, "What if we could turn our own notes into quizzes to reinforce learning?" This led to the creation of Quiz Sensei, a tool designed to personalize and optimize education.
 
