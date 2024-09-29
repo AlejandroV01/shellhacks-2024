@@ -17,6 +17,7 @@ import {
 import { AnswerButton } from "./_helpers/AnswerButton";
 import { QuizResults } from "./_helpers/QuizResults";
 import MarkdownRenderer from "../MarkdownRenderer";
+import { sendGAEvent } from "@next/third-parties/google";
 
 type Props = {
   quiz: IQuiz;
@@ -53,6 +54,10 @@ export const AnswerSelector = ({ quiz }: Props) => {
       return;
     }
 
+    sendGAEvent({
+      action: "next_question",
+    });
+
     updateQuiz(quiz.noteId, quiz.id, {
       currentQuestionIndex: quiz.currentQuestionIndex + 1,
     });
@@ -62,6 +67,10 @@ export const AnswerSelector = ({ quiz }: Props) => {
 
   const handleGoToResults = () => {
     setIsShowingResults(true);
+
+    sendGAEvent({
+      action: "go_to_results",
+    });
   };
 
   const handleStartOver = () => {

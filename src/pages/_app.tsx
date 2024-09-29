@@ -10,34 +10,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import NextNProgress from "nextjs-progressbar";
-
-import { useEffect } from "react";
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAAB-BT5Juq_0D-DTUKTOtakBxhN9tb8po",
-  authDomain: "quiz-sensei.firebaseapp.com",
-  projectId: "quiz-sensei",
-  storageBucket: "quiz-sensei.appspot.com",
-  messagingSenderId: "672319185573",
-  appId: "1:672319185573:web:78668c47c0e5a6c862234c",
-  measurementId: "G-ZEYTJFB4TN",
-};
-
-export const initFirebaseAnalytics = () => {
-  if (typeof window !== "undefined") {
-    const app = initializeApp(firebaseConfig);
-    getAnalytics(app);
-  }
-};
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
-
-  useEffect(() => {
-    initFirebaseAnalytics();
-  }, []);
 
   return (
     <ThemeProvider
@@ -48,6 +24,8 @@ export default function App({ Component, pageProps }: AppProps) {
     >
       <HydrationZustand>
         <AnimatePresence mode="wait">
+          <GoogleAnalytics gaId="G-ZEYTJFB4TN" />
+
           <NextNProgress />
           <Analytics />
 
