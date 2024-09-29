@@ -135,7 +135,7 @@ const NotePage = () => {
           )}
 
           <div>
-            {note.quizzes.map((quiz, index) => {
+            {note.quizzes.toReversed().map((quiz, index) => {
               const questionsPercentageOfCompletion = Math.round(
                 ((quiz.currentQuestionIndex + 1) / quiz.questions.length) * 100
               );
