@@ -49,8 +49,6 @@ export const ProgressGraph = ({ note }: { note: INote }) => {
     })
     .filter(Boolean);
 
-  console.log(noteQuizData);
-
   return (
     <ChartContainer config={chartConfig} className="h-full w-full">
       <ResponsiveContainer width="100%" height="100%">
